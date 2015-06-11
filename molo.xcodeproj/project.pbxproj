@@ -1,0 +1,439 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		9062741A1B2A010D00C77618 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 906274191B2A010D00C77618 /* AppDelegate.m */; };
+		9062741C1B2A010D00C77618 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 9062741B1B2A010D00C77618 /* main.m */; };
+		9062741F1B2A010D00C77618 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9062741E1B2A010D00C77618 /* ViewController.m */; };
+		906274221B2A010D00C77618 /* molo.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 906274201B2A010D00C77618 /* molo.xcdatamodeld */; };
+		906274241B2A010D00C77618 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 906274231B2A010D00C77618 /* Images.xcassets */; };
+		906274271B2A010D00C77618 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 906274251B2A010D00C77618 /* Main.storyboard */; };
+		906274331B2A010D00C77618 /* moloTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 906274321B2A010D00C77618 /* moloTests.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		9062742D1B2A010D00C77618 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9062740B1B2A010D00C77618 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 906274121B2A010D00C77618;
+			remoteInfo = molo;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		906274131B2A010D00C77618 /* molo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = molo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		906274171B2A010D00C77618 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		906274181B2A010D00C77618 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		906274191B2A010D00C77618 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		9062741B1B2A010D00C77618 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		9062741D1B2A010D00C77618 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		9062741E1B2A010D00C77618 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		906274211B2A010D00C77618 /* molo.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = molo.xcdatamodel; sourceTree = "<group>"; };
+		906274231B2A010D00C77618 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		906274261B2A010D00C77618 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		9062742C1B2A010D00C77618 /* moloTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = moloTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		906274311B2A010D00C77618 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		906274321B2A010D00C77618 /* moloTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = moloTests.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		906274101B2A010D00C77618 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		906274291B2A010D00C77618 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		9062740A1B2A010D00C77618 = {
+			isa = PBXGroup;
+			children = (
+				906274151B2A010D00C77618 /* molo */,
+				9062742F1B2A010D00C77618 /* moloTests */,
+				906274141B2A010D00C77618 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		906274141B2A010D00C77618 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				906274131B2A010D00C77618 /* molo.app */,
+				9062742C1B2A010D00C77618 /* moloTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		906274151B2A010D00C77618 /* molo */ = {
+			isa = PBXGroup;
+			children = (
+				906274181B2A010D00C77618 /* AppDelegate.h */,
+				906274191B2A010D00C77618 /* AppDelegate.m */,
+				9062741D1B2A010D00C77618 /* ViewController.h */,
+				9062741E1B2A010D00C77618 /* ViewController.m */,
+				906274231B2A010D00C77618 /* Images.xcassets */,
+				906274251B2A010D00C77618 /* Main.storyboard */,
+				906274201B2A010D00C77618 /* molo.xcdatamodeld */,
+				906274161B2A010D00C77618 /* Supporting Files */,
+			);
+			path = molo;
+			sourceTree = "<group>";
+		};
+		906274161B2A010D00C77618 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				906274171B2A010D00C77618 /* Info.plist */,
+				9062741B1B2A010D00C77618 /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		9062742F1B2A010D00C77618 /* moloTests */ = {
+			isa = PBXGroup;
+			children = (
+				906274321B2A010D00C77618 /* moloTests.m */,
+				906274301B2A010D00C77618 /* Supporting Files */,
+			);
+			path = moloTests;
+			sourceTree = "<group>";
+		};
+		906274301B2A010D00C77618 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				906274311B2A010D00C77618 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		906274121B2A010D00C77618 /* molo */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 906274361B2A010D00C77618 /* Build configuration list for PBXNativeTarget "molo" */;
+			buildPhases = (
+				9062740F1B2A010D00C77618 /* Sources */,
+				906274101B2A010D00C77618 /* Frameworks */,
+				906274111B2A010D00C77618 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = molo;
+			productName = molo;
+			productReference = 906274131B2A010D00C77618 /* molo.app */;
+			productType = "com.apple.product-type.application";
+		};
+		9062742B1B2A010D00C77618 /* moloTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 906274391B2A010D00C77618 /* Build configuration list for PBXNativeTarget "moloTests" */;
+			buildPhases = (
+				906274281B2A010D00C77618 /* Sources */,
+				906274291B2A010D00C77618 /* Frameworks */,
+				9062742A1B2A010D00C77618 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				9062742E1B2A010D00C77618 /* PBXTargetDependency */,
+			);
+			name = moloTests;
+			productName = moloTests;
+			productReference = 9062742C1B2A010D00C77618 /* moloTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		9062740B1B2A010D00C77618 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0630;
+				ORGANIZATIONNAME = GLP;
+				TargetAttributes = {
+					906274121B2A010D00C77618 = {
+						CreatedOnToolsVersion = 6.3.2;
+					};
+					9062742B1B2A010D00C77618 = {
+						CreatedOnToolsVersion = 6.3.2;
+						TestTargetID = 906274121B2A010D00C77618;
+					};
+				};
+			};
+			buildConfigurationList = 9062740E1B2A010D00C77618 /* Build configuration list for PBXProject "molo" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 9062740A1B2A010D00C77618;
+			productRefGroup = 906274141B2A010D00C77618 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				906274121B2A010D00C77618 /* molo */,
+				9062742B1B2A010D00C77618 /* moloTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		906274111B2A010D00C77618 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				906274241B2A010D00C77618 /* Images.xcassets in Resources */,
+				906274271B2A010D00C77618 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9062742A1B2A010D00C77618 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		9062740F1B2A010D00C77618 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				906274221B2A010D00C77618 /* molo.xcdatamodeld in Sources */,
+				9062741F1B2A010D00C77618 /* ViewController.m in Sources */,
+				9062741C1B2A010D00C77618 /* main.m in Sources */,
+				9062741A1B2A010D00C77618 /* AppDelegate.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		906274281B2A010D00C77618 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				906274331B2A010D00C77618 /* moloTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		9062742E1B2A010D00C77618 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 906274121B2A010D00C77618 /* molo */;
+			targetProxy = 9062742D1B2A010D00C77618 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		906274251B2A010D00C77618 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				906274261B2A010D00C77618 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		906274341B2A010D00C77618 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		906274351B2A010D00C77618 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		906274371B2A010D00C77618 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = molo/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		906274381B2A010D00C77618 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = molo/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		9062743A1B2A010D00C77618 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = moloTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/molo.app/Contents/MacOS/molo";
+			};
+			name = Debug;
+		};
+		9062743B1B2A010D00C77618 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = moloTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/molo.app/Contents/MacOS/molo";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		9062740E1B2A010D00C77618 /* Build configuration list for PBXProject "molo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				906274341B2A010D00C77618 /* Debug */,
+				906274351B2A010D00C77618 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		906274361B2A010D00C77618 /* Build configuration list for PBXNativeTarget "molo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				906274371B2A010D00C77618 /* Debug */,
+				906274381B2A010D00C77618 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		906274391B2A010D00C77618 /* Build configuration list for PBXNativeTarget "moloTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9062743A1B2A010D00C77618 /* Debug */,
+				9062743B1B2A010D00C77618 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		906274201B2A010D00C77618 /* molo.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				906274211B2A010D00C77618 /* molo.xcdatamodel */,
+			);
+			currentVersion = 906274211B2A010D00C77618 /* molo.xcdatamodel */;
+			path = molo.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = 9062740B1B2A010D00C77618 /* Project object */;
+}
