@@ -14,6 +14,7 @@
 		906274241B2A010D00C77618 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 906274231B2A010D00C77618 /* Images.xcassets */; };
 		906274271B2A010D00C77618 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 906274251B2A010D00C77618 /* Main.storyboard */; };
 		906274331B2A010D00C77618 /* moloTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 906274321B2A010D00C77618 /* moloTests.m */; };
+		90B93F7A1B2A3DF200B31DDC /* ChatTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 90B93F791B2A3DF200B31DDC /* ChatTableView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +41,8 @@
 		9062742C1B2A010D00C77618 /* moloTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = moloTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		906274311B2A010D00C77618 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		906274321B2A010D00C77618 /* moloTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = moloTests.m; sourceTree = "<group>"; };
+		90B93F781B2A3DF200B31DDC /* ChatTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatTableView.h; sourceTree = "<group>"; };
+		90B93F791B2A3DF200B31DDC /* ChatTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatTableView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,6 +90,8 @@
 				9062741E1B2A010D00C77618 /* ViewController.m */,
 				906274231B2A010D00C77618 /* Images.xcassets */,
 				906274251B2A010D00C77618 /* Main.storyboard */,
+				90B93F781B2A3DF200B31DDC /* ChatTableView.h */,
+				90B93F791B2A3DF200B31DDC /* ChatTableView.m */,
 				906274201B2A010D00C77618 /* molo.xcdatamodeld */,
 				906274161B2A010D00C77618 /* Supporting Files */,
 			);
@@ -163,7 +168,7 @@
 		9062740B1B2A010D00C77618 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0630;
+				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = GLP;
 				TargetAttributes = {
 					906274121B2A010D00C77618 = {
@@ -222,6 +227,7 @@
 				9062741F1B2A010D00C77618 /* ViewController.m in Sources */,
 				9062741C1B2A010D00C77618 /* main.m in Sources */,
 				9062741A1B2A010D00C77618 /* AppDelegate.m in Sources */,
+				90B93F7A1B2A3DF200B31DDC /* ChatTableView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -276,6 +282,7 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -341,6 +348,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = molo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.GLP.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -352,6 +360,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = molo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.GLP.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -371,6 +380,7 @@
 				);
 				INFOPLIST_FILE = moloTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.GLP.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/molo.app/Contents/MacOS/molo";
 			};
@@ -387,6 +397,7 @@
 				);
 				INFOPLIST_FILE = moloTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.GLP.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/molo.app/Contents/MacOS/molo";
 			};
@@ -411,6 +422,7 @@
 				906274381B2A010D00C77618 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		906274391B2A010D00C77618 /* Build configuration list for PBXNativeTarget "moloTests" */ = {
 			isa = XCConfigurationList;
@@ -419,6 +431,7 @@
 				9062743B1B2A010D00C77618 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
