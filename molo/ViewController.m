@@ -21,14 +21,9 @@ static const NSString *ATTableData[] = {
 
 @implementation ViewController
 
-@synthesize _convoTableView;
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    [self.view addSubview:self._convoTableView];
-    
-    self._tableContents = [NSMutableArray new];
     NSString *__strong*data = &ATTableData[0];
     while (*data != nil) {
         NSString *name = [[NSString alloc] initWithString:*data];
@@ -39,33 +34,67 @@ static const NSString *ATTableData[] = {
         data++;
     }
     NSLog(@"clearly doing something");
-    [self._convoTableView reloadData];
+    [self createTableView];
+
 }
 
-- (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView {
-    NSLog(@"checking the number of rows!");
-    return [self._tableContents count];
+-(NSArray *)dataArray
+{
+    NSArray *array = [NSArray arrayWithObjects:
+                      [NSDictionary dictionaryWithObjectsAndKeys:@"1001",@"key1",@"1002",@"key2",@"1003",@"key3",@"1004",@"key4",@"1005",@"key5",@"1006",@"key6",@"1007",@"key7", nil],
+                      [NSDictionary dictionaryWithObjectsAndKeys:@"2001",@"key1",@"2002",@"key2",@"2003",@"key3",@"2004",@"key4",@"2005",@"key5",@"2006",@"key6",@"2007",@"key7", nil],
+                      [NSDictionary dictionaryWithObjectsAndKeys:@"3001",@"key1",@"3002",@"key2",@"3003",@"key3",@"3004",@"key4",@"3005",@"key5",@"3006",@"key6",@"3007",@"key7", nil],
+                      [NSDictionary dictionaryWithObjectsAndKeys:@"4001",@"key1",@"4002",@"key2",@"4003",@"key3",@"4004",@"key4",@"4005",@"key5",@"4006",@"key6",@"4007",@"key7", nil],
+                      nil];
+    return array;
 }
 
-
-- (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
-    NSLog(@"In the viewforTableColumn area!");
-    // Group our "model" object, which is a dictionary
-    NSString *blurb = [self._tableContents objectAtIndex:row];
-    
-    // In IB the tableColumn has the identifier set to the same string as the keys in our dictionary
-    NSString *identifier = [tableColumn identifier];
-    
-    if ([identifier isEqualToString:@"MainCell"]) {
-        // We pass us as the owner so we can setup target/actions into this main controller object
-        NSTableCellView *cellView = [tableView makeViewWithIdentifier:identifier owner:self];
-        // Then setup properties on the cellView based on the column
-        cellView.textField.stringValue = blurb;
-        return cellView;
-    } else {
-        NSAssert1(NO, @"Unhandled table column identifier %@", identifier);
+- (void) createTableView{
+    NSScrollView *scrollView = [[NSScrollView alloc] initWithFrame:placeholderView.bounds];
+    [scrollView setBorderType:NSBezelBorder];
+    NSTableView *myTableView = [[NSTableView alloc] initWithFrame:placeholderView.bounds];
+    NSTableColumn *tCol;
+    int noOfColumns = 7;
+    for (int i=0; i<noOfColumns; i++)
+    {
+        tCol = [[NSTableColumn alloc] initWithIdentifier:[NSString stringWithFormat:@"key%d",i+1]];
+        [tCol setWidth:100.0];
+        [[tCol headerCell] setStringValue:[NSString stringWithFormat:@"Column %d",i+1]];
+        [myTableView addTableColumn:tCol];
     }
-    return nil;
+    
+    [myTableView setUsesAlternatingRowBackgroundColors:YES];
+    [myTableView setGridStyleMask:NSTableViewSolidVerticalGridLineMask];
+    [myTableView setGridColor:[NSColor redColor]];
+    [myTableView setRowHeight:23.0];
+    [myTableView setDelegate:self];
+    [myTableView setDataSource:self];
+    [myTableView setSelectionHighlightStyle:NSTableViewSelectionHighlightStyleRegular];
+    [myTableView setAutoresizesSubviews:YES];
+    
+    [scrollView setHasVerticalScroller:YES];
+    [scrollView setHasHorizontalScroller:YES];
+    [scrollView setAutoresizesSubviews:YES];
+    [scrollView setAutoresizingMask:NSViewWidthSizable|NSViewHeightSizable];
+    [scrollView setDocumentView:myTableView];
+    [placeholderView addSubview:scrollView];
+}
+
+// TableView Datasource method implementation
+- (id)tableView:(NSTableView *)aTableView objectValueForTableColumn:(NSTableColumn *)aTableColumn row:(NSInteger)rowIndex
+{
+    // NSString *aString = [NSString stringWithFormat:@"%@, Row %ld",[aTableColumn identifier],(long)rowIndex];
+    NSString *aString;
+    aString = [[self.dataArray objectAtIndex:rowIndex] objectForKey:[aTableColumn identifier]];
+    return aString;
+}
+
+// TableView Datasource method implementation
+- (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView
+{
+    //we have only one table in the screen and thus we are not checking the row count based on the target table view
+    long recordCount = [self.dataArray count];
+    return recordCount;
 }
 
 - (void)setRepresentedObject:(id)representedObject {
@@ -73,9 +102,6 @@ static const NSString *ATTableData[] = {
 
     // Update the view, if already loaded.
 }
-
-
-
 
 - (IBAction)sendMsg:(id)sender {
     NSString *recMsg = [self.usrMsg stringValue];

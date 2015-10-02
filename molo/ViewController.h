@@ -9,7 +9,10 @@
 #import <Cocoa/Cocoa.h>
 #import "ChatTableView.h"
 
-@interface ViewController : NSViewController <NSTableViewDelegate, NSTableViewDataSource>
+@interface ViewController : NSViewController <NSTableViewDelegate, NSTableViewDataSource>{
+    
+    IBOutlet NSView *placeholderView;
+}
 
 - (IBAction)sendMsg:(id)sender;
 - (IBAction)getUsrMsg:(id)sender;
@@ -18,7 +21,8 @@
 
 // TODO1: think about data encapsulation and hiding...
 @property NSMutableArray *_tableContents;
-@property (strong) IBOutlet NSTableView *_convoTableView;
+
+
 
 @end
 
