@@ -16,12 +16,13 @@
 
 - (IBAction)sendMsg:(id)sender;
 - (IBAction)getUsrMsg:(id)sender;
+- (void) msgToQueue:(NSString *)msg;
 
 @property (weak) IBOutlet NSTextFieldCell *usrMsg;
 
 // TODO1: think about data encapsulation and hiding...
 @property NSMutableArray *_tableContents;
-
+@property NSTableView *_myTableView;
 
 
 @end

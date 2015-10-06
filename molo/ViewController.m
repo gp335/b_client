@@ -33,6 +33,15 @@ static const NSString *ATTableData[] = {
         [self._tableContents addObject:dictionary];
         data++;
     }
+    
+    self._tableContents =
+    [[NSMutableArray alloc] initWithObjects:
+     [NSDictionary dictionaryWithObjectsAndKeys:@"",@"key1",@"What up dog!",@"key2", nil],
+     [NSDictionary dictionaryWithObjectsAndKeys:@"Not much how about you?",@"key1",@"",@"key2", nil],
+     [NSDictionary dictionaryWithObjectsAndKeys:@"",@"key1",@"Just chilling and watching the game.",@"key2", nil],
+     [NSDictionary dictionaryWithObjectsAndKeys:@"Sweet.",@"key1",@"",@"key2", nil],
+     nil];
+    
     NSLog(@"clearly doing something");
     [self createTableView];
 
@@ -41,42 +50,47 @@ static const NSString *ATTableData[] = {
 -(NSArray *)dataArray
 {
     NSArray *array = [NSArray arrayWithObjects:
-                      [NSDictionary dictionaryWithObjectsAndKeys:@"1001",@"key1",@"1002",@"key2",@"1003",@"key3",@"1004",@"key4",@"1005",@"key5",@"1006",@"key6",@"1007",@"key7", nil],
-                      [NSDictionary dictionaryWithObjectsAndKeys:@"2001",@"key1",@"2002",@"key2",@"2003",@"key3",@"2004",@"key4",@"2005",@"key5",@"2006",@"key6",@"2007",@"key7", nil],
-                      [NSDictionary dictionaryWithObjectsAndKeys:@"3001",@"key1",@"3002",@"key2",@"3003",@"key3",@"3004",@"key4",@"3005",@"key5",@"3006",@"key6",@"3007",@"key7", nil],
-                      [NSDictionary dictionaryWithObjectsAndKeys:@"4001",@"key1",@"4002",@"key2",@"4003",@"key3",@"4004",@"key4",@"4005",@"key5",@"4006",@"key6",@"4007",@"key7", nil],
+                      [NSDictionary dictionaryWithObjectsAndKeys:@"",@"key1",@"What up dog!",@"key2", nil],
+                      [NSDictionary dictionaryWithObjectsAndKeys:@"Not much how about you?",@"key1",@"",@"key2", nil],
+                      [NSDictionary dictionaryWithObjectsAndKeys:@"",@"key1",@"Just chilling and watching the game.",@"key2", nil],
+                      [NSDictionary dictionaryWithObjectsAndKeys:@"Sweet.",@"key1",@"",@"key2", nil],
                       nil];
     return array;
 }
 
+// usr string goes on right, friend string on the left...
+
+
 - (void) createTableView{
     NSScrollView *scrollView = [[NSScrollView alloc] initWithFrame:placeholderView.bounds];
     [scrollView setBorderType:NSBezelBorder];
-    NSTableView *myTableView = [[NSTableView alloc] initWithFrame:placeholderView.bounds];
+    self._myTableView = [[NSTableView alloc] initWithFrame:placeholderView.bounds];
     NSTableColumn *tCol;
-    int noOfColumns = 7;
+    int noOfColumns = 2;
     for (int i=0; i<noOfColumns; i++)
     {
         tCol = [[NSTableColumn alloc] initWithIdentifier:[NSString stringWithFormat:@"key%d",i+1]];
-        [tCol setWidth:100.0];
+        // TODO: set width dynamically based on size of the window
+        [tCol setWidth:200.0];
         [[tCol headerCell] setStringValue:[NSString stringWithFormat:@"Column %d",i+1]];
-        [myTableView addTableColumn:tCol];
+        [self._myTableView addTableColumn:tCol];
     }
     
-    [myTableView setUsesAlternatingRowBackgroundColors:YES];
-    [myTableView setGridStyleMask:NSTableViewSolidVerticalGridLineMask];
-    [myTableView setGridColor:[NSColor redColor]];
-    [myTableView setRowHeight:23.0];
-    [myTableView setDelegate:self];
-    [myTableView setDataSource:self];
-    [myTableView setSelectionHighlightStyle:NSTableViewSelectionHighlightStyleRegular];
-    [myTableView setAutoresizesSubviews:YES];
+    // TODO: make all of this formatting nicer
+    [self._myTableView setUsesAlternatingRowBackgroundColors:NO];
+    [self._myTableView setGridStyleMask:NSTableViewSolidVerticalGridLineMask];
+    [self._myTableView setGridColor:[NSColor whiteColor]];
+    [self._myTableView setRowHeight:23.0];
+    [self._myTableView setDelegate:self];
+    [self._myTableView setDataSource:self];
+    [self._myTableView setSelectionHighlightStyle:NSTableViewSelectionHighlightStyleRegular];
+    [self._myTableView setAutoresizesSubviews:YES];
     
     [scrollView setHasVerticalScroller:YES];
     [scrollView setHasHorizontalScroller:YES];
     [scrollView setAutoresizesSubviews:YES];
     [scrollView setAutoresizingMask:NSViewWidthSizable|NSViewHeightSizable];
-    [scrollView setDocumentView:myTableView];
+    [scrollView setDocumentView:self._myTableView];
     [placeholderView addSubview:scrollView];
 }
 
@@ -85,7 +99,7 @@ static const NSString *ATTableData[] = {
 {
     // NSString *aString = [NSString stringWithFormat:@"%@, Row %ld",[aTableColumn identifier],(long)rowIndex];
     NSString *aString;
-    aString = [[self.dataArray objectAtIndex:rowIndex] objectForKey:[aTableColumn identifier]];
+    aString = [[self._tableContents objectAtIndex:rowIndex] objectForKey:[aTableColumn identifier]];
     return aString;
 }
 
@@ -93,7 +107,7 @@ static const NSString *ATTableData[] = {
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView
 {
     //we have only one table in the screen and thus we are not checking the row count based on the target table view
-    long recordCount = [self.dataArray count];
+    long recordCount = [self._tableContents count];
     return recordCount;
 }
 
@@ -106,15 +120,22 @@ static const NSString *ATTableData[] = {
 - (IBAction)sendMsg:(id)sender {
     NSString *recMsg = [self.usrMsg stringValue];
     NSLog(@"Pushed send with: [%@]", recMsg);
-    // send to message queue
+    [self msgToQueue:recMsg];
     [self.usrMsg setStringValue:@""];
 }
 
 - (IBAction)getUsrMsg:(id)sender {
     NSString *recMsg = [sender stringValue];
     NSLog(@"Hit enter with: [%@]", recMsg);
-    // send to message queue
+    [self msgToQueue:recMsg];
     [sender setStringValue:@""];
+}
+
+-(void) msgToQueue:(NSString *)msg{
+    NSLog(@"Queuing up the message to send!");
+    // actually insert it into a queue structure
+    [self._tableContents addObject:[NSDictionary dictionaryWithObjectsAndKeys:@"",@"key1",msg,@"key2", nil]];
+    [self._myTableView reloadData];  // make this more targetted in the future...
 }
 
 @end

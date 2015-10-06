@@ -669,21 +669,11 @@
             <objects>
                 <viewController id="XfG-lQ-9wD" customClass="ViewController" sceneMemberID="viewController">
                     <view key="view" id="m2S-Jp-Qdl">
-                        <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
+                        <rect key="frame" x="0.0" y="0.0" width="482" height="286"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Z2z-eI-BXi">
-                                <rect key="frame" x="399" y="29" width="61" height="19"/>
-                                <buttonCell key="cell" type="roundRect" title="Send" bezelStyle="roundedRect" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="VMu-MR-azd">
-                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" metaFont="cellTitle"/>
-                                    <connections>
-                                        <action selector="sendMsg:" target="XfG-lQ-9wD" id="jlo-RB-jPB"/>
-                                    </connections>
-                                </buttonCell>
-                            </button>
-                            <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fqp-r0-DfA">
-                                <rect key="frame" x="20" y="16" width="371" height="46"/>
+                            <textField verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fqp-r0-DfA">
+                                <rect key="frame" x="20" y="13" width="371" height="53"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="l7u-Eu-r3p">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
@@ -693,10 +683,31 @@
                                     <action selector="getUsrMsg:" target="XfG-lQ-9wD" id="gVx-Wi-425"/>
                                 </connections>
                             </textField>
-                            <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ddl-XX-TXZ">
-                                <rect key="frame" x="20" y="70" width="440" height="180"/>
+                            <customView misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ddl-XX-TXZ">
+                                <rect key="frame" x="20" y="86" width="440" height="180"/>
                             </customView>
+                            <button horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Z2z-eI-BXi">
+                                <rect key="frame" x="401" y="29" width="61" height="19"/>
+                                <buttonCell key="cell" type="roundRect" title="Send" bezelStyle="roundedRect" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="VMu-MR-azd">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="cellTitle"/>
+                                    <connections>
+                                        <action selector="sendMsg:" target="XfG-lQ-9wD" id="jlo-RB-jPB"/>
+                                    </connections>
+                                </buttonCell>
+                            </button>
                         </subviews>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="ddl-XX-TXZ" secondAttribute="trailing" constant="20" id="0Wl-73-QuC"/>
+                            <constraint firstItem="Z2z-eI-BXi" firstAttribute="leading" secondItem="fqp-r0-DfA" secondAttribute="trailing" constant="10" id="0ji-3e-Kwg"/>
+                            <constraint firstItem="ddl-XX-TXZ" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" constant="20" id="1Zh-5i-hpS"/>
+                            <constraint firstItem="fqp-r0-DfA" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="20" id="NJa-td-Wli"/>
+                            <constraint firstItem="ddl-XX-TXZ" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="20" id="P2B-3M-ub7"/>
+                            <constraint firstItem="fqp-r0-DfA" firstAttribute="top" secondItem="ddl-XX-TXZ" secondAttribute="bottom" constant="10" id="S9x-LC-BcQ"/>
+                            <constraint firstItem="Z2z-eI-BXi" firstAttribute="centerY" secondItem="fqp-r0-DfA" secondAttribute="centerY" id="SNd-XX-kv7"/>
+                            <constraint firstAttribute="trailing" secondItem="Z2z-eI-BXi" secondAttribute="trailing" constant="20" id="aET-kf-gp4"/>
+                            <constraint firstAttribute="bottom" secondItem="fqp-r0-DfA" secondAttribute="bottom" constant="20" id="aqp-K7-xot"/>
+                        </constraints>
                     </view>
                     <connections>
                         <outlet property="placeholderView" destination="ddl-XX-TXZ" id="WBu-mW-b2u"/>
@@ -705,7 +716,7 @@
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="75" y="655"/>
+            <point key="canvasLocation" x="75" y="663"/>
         </scene>
     </scenes>
 </document>
