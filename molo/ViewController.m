@@ -44,7 +44,7 @@ static const NSString *ATTableData[] = {
     
     NSLog(@"clearly doing something");
     [self createTableView];
-
+    [[[self view] window] setInitialFirstResponder:[self usrMsg]];
 }
 
 -(NSArray *)dataArray

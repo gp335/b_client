@@ -669,12 +669,12 @@
             <objects>
                 <viewController id="XfG-lQ-9wD" customClass="ViewController" sceneMemberID="viewController">
                     <view key="view" id="m2S-Jp-Qdl">
-                        <rect key="frame" x="0.0" y="0.0" width="482" height="286"/>
+                        <rect key="frame" x="0.0" y="0.0" width="489" height="306"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <textField verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fqp-r0-DfA">
-                                <rect key="frame" x="20" y="13" width="371" height="53"/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="l7u-Eu-r3p">
+                            <textField verticalHuggingPriority="1000" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fqp-r0-DfA">
+                                <rect key="frame" x="20" y="20" width="395" height="22"/>
+                                <textFieldCell key="cell" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="l7u-Eu-r3p">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -683,11 +683,11 @@
                                     <action selector="getUsrMsg:" target="XfG-lQ-9wD" id="gVx-Wi-425"/>
                                 </connections>
                             </textField>
-                            <customView misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ddl-XX-TXZ">
-                                <rect key="frame" x="20" y="86" width="440" height="180"/>
+                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="ddl-XX-TXZ">
+                                <rect key="frame" x="20" y="52" width="449" height="234"/>
                             </customView>
-                            <button horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Z2z-eI-BXi">
-                                <rect key="frame" x="401" y="29" width="61" height="19"/>
+                            <button horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="Z2z-eI-BXi">
+                                <rect key="frame" x="425" y="21" width="44" height="19"/>
                                 <buttonCell key="cell" type="roundRect" title="Send" bezelStyle="roundedRect" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="VMu-MR-azd">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="cellTitle"/>
@@ -716,7 +716,7 @@
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="75" y="663"/>
+            <point key="canvasLocation" x="78.5" y="663"/>
         </scene>
     </scenes>
 </document>
