@@ -1,52 +1,37 @@
 //
-//  ViewController.m
+//  FriendListViewController.m
 //  molo
 //
-//  Created by Geoffrey Peterson on 6/11/15.
-//  Copyright (c) 2015 GLP. All rights reserved.
+//  Created by Geoffrey Peterson on 11/17/15.
+//  Copyright © 2015 GLP. All rights reserved.
 //
 
-#import "ViewController.h"
-#import "cppTestWrapper.h"
+#import "FriendListViewController.h"
 
-@interface ViewController ()
+@interface FriendListViewController ()
 
 @end
 
-@implementation ViewController
-
+@implementation FriendListViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
-    
+    // Do view setup here.
     self._tableContents =
     [[NSMutableArray alloc] initWithObjects:
-     [NSDictionary dictionaryWithObjectsAndKeys:@"",@"key1",@"What up dog!",@"key2", nil],
-     [NSDictionary dictionaryWithObjectsAndKeys:@"Not much how about you?",@"key1",@"",@"key2", nil],
-     [NSDictionary dictionaryWithObjectsAndKeys:@"",@"key1",@"Just netflix and cooling.",@"key2", nil],
-     [NSDictionary dictionaryWithObjectsAndKeys:@"Sweet.",@"key1",@"",@"key2", nil],
+     [NSDictionary dictionaryWithObjectsAndKeys:@"Friend #1",@"key1", nil],
+     [NSDictionary dictionaryWithObjectsAndKeys:@"Friend #2",@"key1", nil],
+     [NSDictionary dictionaryWithObjectsAndKeys:@"Friend #3",@"key1", nil],
      nil];
-    
-    NSLog(@"clearly doing something");
-    cppTestWrapper *cppObj = [[cppTestWrapper alloc] init];
-    NSLog(@" Public val is: %i", [cppObj getPublicInt]);
-    NSLog(@" Private val is: %i", [cppObj getPrivateInt]);
-    NSLog(@" Private inline val is: %i", [cppObj getPrivateInlineInt]);
-    
     [self createTableView];
-    [[[self view] window] setInitialFirstResponder:(NSView *)[self usrMsg]];
 }
 
-
-
-// usr string goes on right, friend string on the left...
 - (void) createTableView{
-    NSScrollView *scrollView = [[NSScrollView alloc] initWithFrame:placeholderView.bounds];
+    NSScrollView *scrollView = [[NSScrollView alloc] initWithFrame:friendListPlaceholderView.bounds];
     [scrollView setBorderType:NSBezelBorder];
-    self._myTableView = [[NSTableView alloc] initWithFrame:placeholderView.bounds];
+    self._myTableView = [[NSTableView alloc] initWithFrame:friendListPlaceholderView.bounds];
     NSTableColumn *tCol;
-    int noOfColumns = 2;
+    int noOfColumns = 1;
     for (int i=0; i<noOfColumns; i++)
     {
         tCol = [[NSTableColumn alloc] initWithIdentifier:[NSString stringWithFormat:@"key%d",i+1]];
@@ -71,7 +56,7 @@
     [scrollView setAutoresizesSubviews:YES];
     [scrollView setAutoresizingMask:NSViewWidthSizable|NSViewHeightSizable];
     [scrollView setDocumentView:self._myTableView];
-    [placeholderView addSubview:scrollView];
+    [friendListPlaceholderView addSubview:scrollView];
 }
 
 // TableView Datasource method implementation
@@ -93,30 +78,8 @@
 
 - (void)setRepresentedObject:(id)representedObject {
     [super setRepresentedObject:representedObject];
-
+    
     // Update the view, if already loaded.
-}
-
-
-- (IBAction)sendMsg:(id)sender {
-    NSString *recMsg = [self.usrMsg stringValue];
-    NSLog(@"Pushed send with: [%@]", recMsg);
-    [self msgToQueue:recMsg];
-    [self.usrMsg setStringValue:@""];
-}
-
-- (IBAction)getUsrMsg:(id)sender {
-    NSString *recMsg = [sender stringValue];
-    NSLog(@"Hit enter with: [%@]", recMsg);
-    [self msgToQueue:recMsg];
-    [sender setStringValue:@""];
-}
-
--(void) msgToQueue:(NSString *)msg{
-    NSLog(@"Queuing up the message to send!");
-    // actually insert it into a queue structure
-    [self._tableContents insertObject:[NSDictionary dictionaryWithObjectsAndKeys:@"",@"key1",msg,@"key2", nil] atIndex:0];
-    [self._myTableView reloadData];
 }
 
 @end

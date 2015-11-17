@@ -7,7 +7,6 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "ChatTableView.h"
 
 
 @interface ViewController : NSViewController <NSTableViewDelegate, NSTableViewDataSource>{
