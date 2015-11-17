@@ -9,16 +9,25 @@
 #import <Cocoa/Cocoa.h>
 #import "ChatTableView.h"
 
-@interface ViewController : NSViewController <NSTableViewDelegate, NSTableViewDataSource>
+
+@interface ViewController : NSViewController <NSTableViewDelegate, NSTableViewDataSource>{
+    
+    IBOutlet NSView *placeholderView;
+}
 
 - (IBAction)sendMsg:(id)sender;
 - (IBAction)getUsrMsg:(id)sender;
+- (void) msgToQueue:(NSString *)msg;
+
 
 @property (weak) IBOutlet NSTextFieldCell *usrMsg;
 
 // TODO1: think about data encapsulation and hiding...
 @property NSMutableArray *_tableContents;
-@property (strong) IBOutlet NSTableView *_convoTableView;
+
+@property NSTableView *_myTableView;
+
+
 
 @end
 
