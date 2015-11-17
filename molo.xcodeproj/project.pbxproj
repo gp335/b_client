@@ -15,6 +15,8 @@
 		906274271B2A010D00C77618 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 906274251B2A010D00C77618 /* Main.storyboard */; };
 		906274331B2A010D00C77618 /* moloTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 906274321B2A010D00C77618 /* moloTests.m */; };
 		90B93F7A1B2A3DF200B31DDC /* ChatTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 90B93F791B2A3DF200B31DDC /* ChatTableView.m */; };
+		90ED4DA01BFBA2CF001EAF76 /* cppTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 90ED4D9E1BFBA2CF001EAF76 /* cppTest.cpp */; };
+		90ED4DA31BFBA303001EAF76 /* cppTestWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 90ED4DA21BFBA303001EAF76 /* cppTestWrapper.mm */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,6 +45,10 @@
 		906274321B2A010D00C77618 /* moloTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = moloTests.m; sourceTree = "<group>"; };
 		90B93F781B2A3DF200B31DDC /* ChatTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatTableView.h; sourceTree = "<group>"; };
 		90B93F791B2A3DF200B31DDC /* ChatTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatTableView.m; sourceTree = "<group>"; };
+		90ED4D9E1BFBA2CF001EAF76 /* cppTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cppTest.cpp; sourceTree = "<group>"; };
+		90ED4D9F1BFBA2CF001EAF76 /* cppTest.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = cppTest.hpp; sourceTree = "<group>"; };
+		90ED4DA11BFBA303001EAF76 /* cppTestWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cppTestWrapper.h; sourceTree = "<group>"; };
+		90ED4DA21BFBA303001EAF76 /* cppTestWrapper.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = cppTestWrapper.mm; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,6 +94,10 @@
 				906274191B2A010D00C77618 /* AppDelegate.m */,
 				9062741D1B2A010D00C77618 /* ViewController.h */,
 				9062741E1B2A010D00C77618 /* ViewController.m */,
+				90ED4D9F1BFBA2CF001EAF76 /* cppTest.hpp */,
+				90ED4D9E1BFBA2CF001EAF76 /* cppTest.cpp */,
+				90ED4DA11BFBA303001EAF76 /* cppTestWrapper.h */,
+				90ED4DA21BFBA303001EAF76 /* cppTestWrapper.mm */,
 				906274231B2A010D00C77618 /* Images.xcassets */,
 				906274251B2A010D00C77618 /* Main.storyboard */,
 				90B93F781B2A3DF200B31DDC /* ChatTableView.h */,
@@ -223,7 +233,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				90ED4DA31BFBA303001EAF76 /* cppTestWrapper.mm in Sources */,
 				906274221B2A010D00C77618 /* molo.xcdatamodeld in Sources */,
+				90ED4DA01BFBA2CF001EAF76 /* cppTest.cpp in Sources */,
 				9062741F1B2A010D00C77618 /* ViewController.m in Sources */,
 				9062741C1B2A010D00C77618 /* main.m in Sources */,
 				9062741A1B2A010D00C77618 /* AppDelegate.m in Sources */,
