@@ -48,16 +48,16 @@ static const NSString *ATTableData[] = {
     [[[self view] window] setInitialFirstResponder:[self usrMsg]];
 }
 
--(NSArray *)dataArray
-{
-    NSArray *array = [NSArray arrayWithObjects:
-                      [NSDictionary dictionaryWithObjectsAndKeys:@"",@"key1",@"What up dog!",@"key2", nil],
-                      [NSDictionary dictionaryWithObjectsAndKeys:@"Not much how about you?",@"key1",@"",@"key2", nil],
-                      [NSDictionary dictionaryWithObjectsAndKeys:@"",@"key1",@"Just chilling and watching the game.",@"key2", nil],
-                      [NSDictionary dictionaryWithObjectsAndKeys:@"Sweet.",@"key1",@"",@"key2", nil],
-                      nil];
-    return array;
-}
+//-(NSArray *)dataArray
+//{
+//    NSArray *array = [NSArray arrayWithObjects:
+//                      [NSDictionary dictionaryWithObjectsAndKeys:@"",@"key1",@"What up dog!",@"key2", nil],
+//                      [NSDictionary dictionaryWithObjectsAndKeys:@"Not much how about you?",@"key1",@"",@"key2", nil],
+//                      [NSDictionary dictionaryWithObjectsAndKeys:@"",@"key1",@"Just chilling and watching the game.",@"key2", nil],
+//                      [NSDictionary dictionaryWithObjectsAndKeys:@"Sweet.",@"key1",@"",@"key2", nil],
+//                      nil];
+//    return array;
+//}
 
 // usr string goes on right, friend string on the left...
 
@@ -136,8 +136,8 @@ static const NSString *ATTableData[] = {
 -(void) msgToQueue:(NSString *)msg{
     NSLog(@"Queuing up the message to send!");
     // actually insert it into a queue structure
-    [self._tableContents addObject:[NSDictionary dictionaryWithObjectsAndKeys:@"",@"key1",msg,@"key2", nil]];
-    [self._myTableView reloadData];  // make this more targetted in the future...
+    [self._tableContents insertObject:[NSDictionary dictionaryWithObjectsAndKeys:@"",@"key1",msg,@"key2", nil] atIndex:0];
+    [self._myTableView reloadData];
 }
 
 @end
