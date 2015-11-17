@@ -8,6 +8,7 @@
 
 #import "ViewController.h"
 #import "ChatTableView.h"
+#import "cppTestWrapper.h"
 
 static const NSString *ATTableData[] = {
     @"First message",
@@ -44,6 +45,11 @@ static const NSString *ATTableData[] = {
      nil];
     
     NSLog(@"clearly doing something");
+    cppTestWrapper *cppObj = [[cppTestWrapper alloc] init];
+    NSLog(@" Public val is: %i", [cppObj getPublicInt]);
+    NSLog(@" Private val is: %i", [cppObj getPrivateInt]);
+    NSLog(@" Private inline val is: %i", [cppObj getPrivateInlineInt]);
+    
     [self createTableView];
     [[[self view] window] setInitialFirstResponder:[self usrMsg]];
 }

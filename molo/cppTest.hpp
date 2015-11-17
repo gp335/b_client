@@ -11,6 +11,15 @@
 
 #include <stdio.h>
 
-class testObject;
+class testClass{
+public:
+    int cpp_myInt = 5;
+    int cpp_getPrivateInt();
+    int cpp_getInlinePrivateInt(){
+        return cpp_myPrivateInt;
+    }
+private:
+    int cpp_myPrivateInt = 10;
+};
 
 #endif /* cppTest_hpp */

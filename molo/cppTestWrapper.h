@@ -11,8 +11,8 @@
 
 @interface cppTestWrapper : NSObject 
 
--(int)getPrivateInt();
--(int)getPrivateInlineInt();
--(int)getPublicInt();
+-(int)getPrivateInt;
+-(int)getPrivateInlineInt;
+-(int)getPublicInt;
 
 @end

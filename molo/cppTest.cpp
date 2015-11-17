@@ -8,17 +8,7 @@
 
 #include "cppTest.hpp"
 
-class testObject{
-public:
-    int myInt = 5;
-    int getPrivateInt();
-    int getInlinePrivateInt(){
-        return myPrivateInt;
-    }
-private:
-    int myPrivateInt = 10;
-};
-
-int testObject::getPrivateInt(){
-    return myPrivateInt;
+int
+testClass::cpp_getPrivateInt(){
+    return cpp_myPrivateInt;
 }

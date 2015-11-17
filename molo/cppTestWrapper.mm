@@ -7,7 +7,7 @@
 //
 
 #import "cppTestWrapper.h"
-#import "cppTest.hpp"
+#include "cppTest.hpp"
 
 
 
@@ -17,31 +17,28 @@
 
 - (id)init {
     if(self = [super init]) {
-        cppInstance= new testClass();
+        cppInstance = new testClass();
     }
     return self;
 }
 
 - (void) dealloc {
     if(cppInstance != NULL) delete cppInstance;
-    [super dealloc];
-}
-
-- (void)callCpp {
-    cppInstance->SomeMethod();
+    // [super dealloc]; // this is provided by the compiler automatically
 }
 
 
--(int)getPrivateInt(){
-    return cppInstance->getPrivateInt();
+
+-(int)getPrivateInt {
+    return cppInstance->cpp_getPrivateInt();
 }
 
--(int)getPrivateInlineInt(){
-    return cppInstance->getPrivateInlineInt();
+-(int)getPrivateInlineInt{
+    return cppInstance->cpp_getInlinePrivateInt();
 }
 
--(int)getPublicInt(){
-    return cppInstance->myInt;
+-(int)getPublicInt{
+    return cppInstance->cpp_myInt;
 }
 
 @end
