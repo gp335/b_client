@@ -51,7 +51,7 @@ static const NSString *ATTableData[] = {
     NSLog(@" Private inline val is: %i", [cppObj getPrivateInlineInt]);
     
     [self createTableView];
-    [[[self view] window] setInitialFirstResponder:[self usrMsg]];
+    [[[self view] window] setInitialFirstResponder:(NSView *)[self usrMsg]];
 }
 
 //-(NSArray *)dataArray
