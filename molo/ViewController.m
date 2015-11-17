@@ -21,14 +21,10 @@ static const NSString *ATTableData[] = {
 
 @implementation ViewController
 
-@synthesize _convoTableView;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    [self.view addSubview:self._convoTableView];
-    
-    self._tableContents = [NSMutableArray new];
     NSString *__strong*data = &ATTableData[0];
     while (*data != nil) {
         NSString *name = [[NSString alloc] initWithString:*data];
@@ -38,34 +34,82 @@ static const NSString *ATTableData[] = {
         [self._tableContents addObject:dictionary];
         data++;
     }
+    
+    self._tableContents =
+    [[NSMutableArray alloc] initWithObjects:
+     [NSDictionary dictionaryWithObjectsAndKeys:@"",@"key1",@"What up dog!",@"key2", nil],
+     [NSDictionary dictionaryWithObjectsAndKeys:@"Not much how about you?",@"key1",@"",@"key2", nil],
+     [NSDictionary dictionaryWithObjectsAndKeys:@"",@"key1",@"Just chilling and watching the game.",@"key2", nil],
+     [NSDictionary dictionaryWithObjectsAndKeys:@"Sweet.",@"key1",@"",@"key2", nil],
+     nil];
+    
     NSLog(@"clearly doing something");
-    [self._convoTableView reloadData];
+    [self createTableView];
+    [[[self view] window] setInitialFirstResponder:[self usrMsg]];
 }
 
-- (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView {
-    NSLog(@"checking the number of rows!");
-    return [self._tableContents count];
+-(NSArray *)dataArray
+{
+    NSArray *array = [NSArray arrayWithObjects:
+                      [NSDictionary dictionaryWithObjectsAndKeys:@"",@"key1",@"What up dog!",@"key2", nil],
+                      [NSDictionary dictionaryWithObjectsAndKeys:@"Not much how about you?",@"key1",@"",@"key2", nil],
+                      [NSDictionary dictionaryWithObjectsAndKeys:@"",@"key1",@"Just chilling and watching the game.",@"key2", nil],
+                      [NSDictionary dictionaryWithObjectsAndKeys:@"Sweet.",@"key1",@"",@"key2", nil],
+                      nil];
+    return array;
 }
 
+// usr string goes on right, friend string on the left...
 
-- (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
-    NSLog(@"In the viewforTableColumn area!");
-    // Group our "model" object, which is a dictionary
-    NSString *blurb = [self._tableContents objectAtIndex:row];
-    
-    // In IB the tableColumn has the identifier set to the same string as the keys in our dictionary
-    NSString *identifier = [tableColumn identifier];
-    
-    if ([identifier isEqualToString:@"MainCell"]) {
-        // We pass us as the owner so we can setup target/actions into this main controller object
-        NSTableCellView *cellView = [tableView makeViewWithIdentifier:identifier owner:self];
-        // Then setup properties on the cellView based on the column
-        cellView.textField.stringValue = blurb;
-        return cellView;
-    } else {
-        NSAssert1(NO, @"Unhandled table column identifier %@", identifier);
+
+- (void) createTableView{
+    NSScrollView *scrollView = [[NSScrollView alloc] initWithFrame:placeholderView.bounds];
+    [scrollView setBorderType:NSBezelBorder];
+    self._myTableView = [[NSTableView alloc] initWithFrame:placeholderView.bounds];
+    NSTableColumn *tCol;
+    int noOfColumns = 2;
+    for (int i=0; i<noOfColumns; i++)
+    {
+        tCol = [[NSTableColumn alloc] initWithIdentifier:[NSString stringWithFormat:@"key%d",i+1]];
+        // TODO: set width dynamically based on size of the window
+        [tCol setWidth:200.0];
+        [[tCol headerCell] setStringValue:[NSString stringWithFormat:@"Column %d",i+1]];
+        [self._myTableView addTableColumn:tCol];
     }
-    return nil;
+    
+    // TODO: make all of this formatting nicer
+    [self._myTableView setUsesAlternatingRowBackgroundColors:NO];
+    [self._myTableView setGridStyleMask:NSTableViewSolidVerticalGridLineMask];
+    [self._myTableView setGridColor:[NSColor whiteColor]];
+    [self._myTableView setRowHeight:23.0];
+    [self._myTableView setDelegate:self];
+    [self._myTableView setDataSource:self];
+    [self._myTableView setSelectionHighlightStyle:NSTableViewSelectionHighlightStyleRegular];
+    [self._myTableView setAutoresizesSubviews:YES];
+    
+    [scrollView setHasVerticalScroller:YES];
+    [scrollView setHasHorizontalScroller:YES];
+    [scrollView setAutoresizesSubviews:YES];
+    [scrollView setAutoresizingMask:NSViewWidthSizable|NSViewHeightSizable];
+    [scrollView setDocumentView:self._myTableView];
+    [placeholderView addSubview:scrollView];
+}
+
+// TableView Datasource method implementation
+- (id)tableView:(NSTableView *)aTableView objectValueForTableColumn:(NSTableColumn *)aTableColumn row:(NSInteger)rowIndex
+{
+    // NSString *aString = [NSString stringWithFormat:@"%@, Row %ld",[aTableColumn identifier],(long)rowIndex];
+    NSString *aString;
+    aString = [[self._tableContents objectAtIndex:rowIndex] objectForKey:[aTableColumn identifier]];
+    return aString;
+}
+
+// TableView Datasource method implementation
+- (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView
+{
+    //we have only one table in the screen and thus we are not checking the row count based on the target table view
+    long recordCount = [self._tableContents count];
+    return recordCount;
 }
 
 - (void)setRepresentedObject:(id)representedObject {
@@ -75,20 +119,25 @@ static const NSString *ATTableData[] = {
 }
 
 
-
-
 - (IBAction)sendMsg:(id)sender {
     NSString *recMsg = [self.usrMsg stringValue];
     NSLog(@"Pushed send with: [%@]", recMsg);
-    // send to message queue
+    [self msgToQueue:recMsg];
     [self.usrMsg setStringValue:@""];
 }
 
 - (IBAction)getUsrMsg:(id)sender {
     NSString *recMsg = [sender stringValue];
     NSLog(@"Hit enter with: [%@]", recMsg);
-    // send to message queue
+    [self msgToQueue:recMsg];
     [sender setStringValue:@""];
+}
+
+-(void) msgToQueue:(NSString *)msg{
+    NSLog(@"Queuing up the message to send!");
+    // actually insert it into a queue structure
+    [self._tableContents addObject:[NSDictionary dictionaryWithObjectsAndKeys:@"",@"key1",msg,@"key2", nil]];
+    [self._myTableView reloadData];  // make this more targetted in the future...
 }
 
 @end
