@@ -1,4 +1,45 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model name="untitled.xcdatamodel" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1" systemVersion="11A491" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
-    <elements/>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="9525" systemVersion="15B42" minimumToolsVersion="Automatic">
+    <entity name="Contact" syncable="YES">
+        <attribute name="contactLocalID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="contactName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="contentKey" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="keyCreationDate" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="signingKey" optional="YES" attributeType="Binary" syncable="YES"/>
+        <relationship name="messages" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Message" inverseName="sender" inverseEntity="Message" syncable="YES"/>
+    </entity>
+    <entity name="Message" syncable="YES">
+        <attribute name="msgContent" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="msgLocalID" attributeType="Integer 64" defaultValueString="0" indexed="YES" syncable="YES"/>
+        <attribute name="msgTimeReceived" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="msgTimeSent" optional="YES" attributeType="Date" syncable="YES"/>
+        <relationship name="sender" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Contact" inverseName="messages" inverseEntity="Contact" syncable="YES"/>
+    </entity>
+    <entity name="ServerPrivateData" syncable="YES">
+        <attribute name="authToken" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="currentQuery" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="serverLocalID" attributeType="Integer 64" defaultValueString="-1" indexed="YES" syncable="YES"/>
+        <attribute name="slotNumber" optional="YES" attributeType="Integer 64" minValueString="0" defaultValueString="0" syncable="YES"/>
+    </entity>
+    <entity name="ServerProfile" syncable="YES">
+        <attribute name="epochTime" optional="YES" attributeType="Integer 64" minValueString="0" defaultValueString="0" syncable="YES"/>
+        <attribute name="globalName" attributeType="String" syncable="YES"/>
+        <attribute name="ipv4Address" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="pirProtocol" attributeType="String" defaultValueString="unknown" syncable="YES"/>
+        <attribute name="portNumber" optional="YES" attributeType="Integer 32" minValueString="1025" maxValueString="65535" syncable="YES"/>
+        <attribute name="serverLocalID" attributeType="Integer 64" defaultValueString="-1" indexed="YES" syncable="YES"/>
+    </entity>
+    <entity name="User" syncable="YES">
+        <attribute name="userLocalID" attributeType="String" indexed="YES" syncable="YES"/>
+        <attribute name="userName" attributeType="String" defaultValueString="Unnamed User" syncable="YES"/>
+        <relationship name="primaryServer" optional="YES" maxCount="1" deletionRule="No Action" destinationEntity="ServerProfile" syncable="YES"/>
+        <relationship name="primaryServerPrivateData" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="ServerPrivateData" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="User" positionX="-317" positionY="-36" width="128" height="103"/>
+        <element name="ServerProfile" positionX="-27" positionY="-88" width="128" height="133"/>
+        <element name="ServerPrivateData" positionX="-27" positionY="63" width="128" height="103"/>
+        <element name="Contact" positionX="-308" positionY="99" width="128" height="133"/>
+        <element name="Message" positionX="-20" positionY="189" width="128" height="118"/>
+    </elements>
 </model>

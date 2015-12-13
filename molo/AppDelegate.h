@@ -11,10 +11,9 @@
 @interface AppDelegate : NSObject <NSApplicationDelegate>
 
 
-
-@property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
-@property (readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel;
-@property (readonly, strong, nonatomic) NSManagedObjectContext *managedObjectContext;
+@property (readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel; // DB scheme
+@property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator; // workspace for our objects
+@property (readonly, strong, nonatomic) NSManagedObjectContext *managedObjectContext; // objects we manipulate
 
 
 @end
