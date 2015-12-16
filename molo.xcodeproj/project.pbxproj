@@ -15,8 +15,11 @@
 		906274241B2A010D00C77618 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 906274231B2A010D00C77618 /* Images.xcassets */; };
 		906274271B2A010D00C77618 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 906274251B2A010D00C77618 /* Main.storyboard */; };
 		906274331B2A010D00C77618 /* moloTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 906274321B2A010D00C77618 /* moloTests.m */; };
+		90780CD21C1D1EDD0041BFCC /* userPreferenceNSViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90780CD11C1D1EDD0041BFCC /* userPreferenceNSViewController.m */; };
 		90ED4DA01BFBA2CF001EAF76 /* cppTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 90ED4D9E1BFBA2CF001EAF76 /* cppTest.cpp */; };
 		90ED4DA31BFBA303001EAF76 /* cppTestWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 90ED4DA21BFBA303001EAF76 /* cppTestWrapper.mm */; };
+		90F3EA191C21B95900381E9B /* MessageDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 90F3EA181C21B95900381E9B /* MessageDatabase.m */; };
+		90F3EA1C1C21CDF900381E9B /* GatewayClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 90F3EA1B1C21CDF900381E9B /* GatewayClass.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,10 +48,16 @@
 		9062742C1B2A010D00C77618 /* moloTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = moloTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		906274311B2A010D00C77618 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		906274321B2A010D00C77618 /* moloTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = moloTests.m; sourceTree = "<group>"; };
+		90780CD01C1D1EDD0041BFCC /* userPreferenceNSViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = userPreferenceNSViewController.h; path = ../userPreferenceNSViewController.h; sourceTree = "<group>"; };
+		90780CD11C1D1EDD0041BFCC /* userPreferenceNSViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = userPreferenceNSViewController.m; path = ../userPreferenceNSViewController.m; sourceTree = "<group>"; };
 		90ED4D9E1BFBA2CF001EAF76 /* cppTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cppTest.cpp; sourceTree = "<group>"; };
 		90ED4D9F1BFBA2CF001EAF76 /* cppTest.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = cppTest.hpp; sourceTree = "<group>"; };
 		90ED4DA11BFBA303001EAF76 /* cppTestWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cppTestWrapper.h; sourceTree = "<group>"; };
 		90ED4DA21BFBA303001EAF76 /* cppTestWrapper.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = cppTestWrapper.mm; sourceTree = "<group>"; };
+		90F3EA171C21B95900381E9B /* MessageDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageDatabase.h; sourceTree = "<group>"; };
+		90F3EA181C21B95900381E9B /* MessageDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageDatabase.m; sourceTree = "<group>"; };
+		90F3EA1A1C21CDF900381E9B /* GatewayClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GatewayClass.h; sourceTree = "<group>"; };
+		90F3EA1B1C21CDF900381E9B /* GatewayClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GatewayClass.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,8 +103,14 @@
 				906274191B2A010D00C77618 /* AppDelegate.m */,
 				9062741D1B2A010D00C77618 /* ViewController.h */,
 				9062741E1B2A010D00C77618 /* ViewController.m */,
+				90F3EA171C21B95900381E9B /* MessageDatabase.h */,
+				90F3EA181C21B95900381E9B /* MessageDatabase.m */,
+				90F3EA1A1C21CDF900381E9B /* GatewayClass.h */,
+				90F3EA1B1C21CDF900381E9B /* GatewayClass.m */,
 				903D42E41BFBBFD20089F64E /* FriendListViewController.h */,
 				903D42E51BFBBFD20089F64E /* FriendListViewController.m */,
+				90780CD01C1D1EDD0041BFCC /* userPreferenceNSViewController.h */,
+				90780CD11C1D1EDD0041BFCC /* userPreferenceNSViewController.m */,
 				90ED4D9F1BFBA2CF001EAF76 /* cppTest.hpp */,
 				90ED4D9E1BFBA2CF001EAF76 /* cppTest.cpp */,
 				90ED4DA11BFBA303001EAF76 /* cppTestWrapper.h */,
@@ -234,10 +249,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				903D42E61BFBBFD20089F64E /* FriendListViewController.m in Sources */,
+				90F3EA191C21B95900381E9B /* MessageDatabase.m in Sources */,
 				90ED4DA31BFBA303001EAF76 /* cppTestWrapper.mm in Sources */,
+				90780CD21C1D1EDD0041BFCC /* userPreferenceNSViewController.m in Sources */,
 				906274221B2A010D00C77618 /* molo.xcdatamodeld in Sources */,
 				90ED4DA01BFBA2CF001EAF76 /* cppTest.cpp in Sources */,
 				9062741F1B2A010D00C77618 /* ViewController.m in Sources */,
+				90F3EA1C1C21CDF900381E9B /* GatewayClass.m in Sources */,
 				9062741C1B2A010D00C77618 /* main.m in Sources */,
 				9062741A1B2A010D00C77618 /* AppDelegate.m in Sources */,
 			);

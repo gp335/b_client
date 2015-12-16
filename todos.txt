@@ -1,4 +1,14 @@
-1) make the text auto-resize nicely if there's more text than one line
-2) make the textcell be the first responder when the app starts up
-3) Fix the table view... make the columns resize and give them better headers
-4) Create a list of friends view
+INTERFACE:
+*) make the text auto-resize nicely if there's more text than one line
+*) make the textcell be the first responder when the app starts up
+*) Fix the table view... make the columns resize and give them better headers
+*) Finish the preferences window
+
+FUNCTIONALITY:
+*) Create a list of friends view
+*) Finish linking messages to persistent store
+*) Push preferences into the persistent store
+
+NETWORKING:
+*) Create a pound-define file for port numbers to use
+*) remember to run checks on startup to make sure that the desired port is free

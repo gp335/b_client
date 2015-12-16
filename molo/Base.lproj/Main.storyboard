@@ -681,7 +681,7 @@
         <!--My profile-->
         <scene sceneID="Y8A-DJ-pnx">
             <objects>
-                <viewController title="My profile" id="rDM-2r-0Wb" sceneMemberID="viewController">
+                <viewController title="My profile" id="rDM-2r-0Wb" customClass="userPreferenceNSViewController" sceneMemberID="viewController">
                     <view key="view" id="tiF-oo-b7Z">
                         <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -701,6 +701,9 @@
                                     <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
+                                <connections>
+                                    <action selector="userNameFieldUpdated:" target="rDM-2r-0Wb" id="aBK-cS-pfn"/>
+                                </connections>
                             </textField>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="VCg-o2-UMN">
                                 <rect key="frame" x="377" y="13" width="59" height="32"/>
@@ -711,6 +714,9 @@
 DQ
 </string>
                                 </buttonCell>
+                                <connections>
+                                    <action selector="okButtonPressed:" target="rDM-2r-0Wb" id="uT4-ou-WTf"/>
+                                </connections>
                             </button>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="4le-5u-MfA">
                                 <rect key="frame" x="297" y="13" width="82" height="32"/>
@@ -721,6 +727,9 @@ DQ
 Gw
 </string>
                                 </buttonCell>
+                                <connections>
+                                    <action selector="cancelButtonPressed:" target="rDM-2r-0Wb" id="3yO-34-ABi"/>
+                                </connections>
                             </button>
                         </subviews>
                         <constraints>
@@ -730,6 +739,9 @@ Gw
                             <constraint firstAttribute="trailing" secondItem="VCg-o2-UMN" secondAttribute="trailing" constant="20" id="oeG-kI-1W0"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="userNameField" destination="9h1-sd-fy2" id="DOL-Le-HCu"/>
+                    </connections>
                 </viewController>
                 <customObject id="c16-S9-89L" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>

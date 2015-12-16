@@ -7,6 +7,8 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "MessageDatabase.h"
+#import "GatewayClass.h"
 
 
 @interface ViewController : NSViewController <NSTableViewDelegate, NSTableViewDataSource>{
@@ -16,7 +18,7 @@
 
 - (IBAction)sendMsg:(id)sender;
 - (IBAction)getUsrMsg:(id)sender;
-- (void) msgToQueue:(NSString *)msg;
+//- (void) msgToQueue:(NSString *)msg;
 
 
 @property (weak) IBOutlet NSTextFieldCell *usrMsg;
