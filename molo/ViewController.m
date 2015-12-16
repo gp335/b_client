@@ -22,14 +22,7 @@
     
     // load existing messages
     
-//    self._tableContents =
-//    [[NSMutableArray alloc] initWithObjects:
-//     [NSDictionary dictionaryWithObjectsAndKeys:@"",@"key1",@"What up dog!",@"key2", nil],
-//     [NSDictionary dictionaryWithObjectsAndKeys:@"Not much how about you?",@"key1",@"",@"key2", nil],
-//     [NSDictionary dictionaryWithObjectsAndKeys:@"",@"key1",@"Just netflix and cooling.",@"key2", nil],
-//     [NSDictionary dictionaryWithObjectsAndKeys:@"Sweet.",@"key1",@"",@"key2", nil],
-//     nil];
-    
+    // just some C++ tests...
     NSLog(@"clearly doing something");
     cppTestWrapper *cppObj = [[cppTestWrapper alloc] init];
     NSLog(@" Public val is: %i", [cppObj getPublicInt]);
@@ -79,10 +72,7 @@
 // TableView Datasource method implementation
 - (id)tableView:(NSTableView *)aTableView objectValueForTableColumn:(NSTableColumn *)aTableColumn row:(NSInteger)rowIndex
 {
-    // NSString *aString = [NSString stringWithFormat:@"%@, Row %ld",[aTableColumn identifier],(long)rowIndex];
-    NSString *aString;
-    aString = [[MessageDatabase sharedInstance] msgAtIndex:rowIndex objectForKey:[aTableColumn identifier]];
-//    aString = [[self._tableContents objectAtIndex:rowIndex] objectForKey:[aTableColumn identifier]];
+    NSString *aString = [[MessageDatabase sharedInstance] msgAtIndex:rowIndex objectForKey:[aTableColumn identifier] forContactID:@"1a1a1a"];
     return aString;
 }
 
@@ -90,8 +80,8 @@
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView
 {
     //we have only one table in the screen and thus we are not checking the row count based on the target table view
-    NSLog(@"Checking for length, which seems to be: %li", [[MessageDatabase sharedInstance] numMsgsInMemory]);
-    return [[MessageDatabase sharedInstance] numMsgsInMemory];
+    NSLog(@"Checking for length, which seems to be: %li", [[MessageDatabase sharedInstance] numMsgsInMemoryForContactID:@"1a1a1a"]);
+    return [[MessageDatabase sharedInstance] numMsgsInMemoryForContactID:@"1a1a1a"];
 }
 
 - (void)setRepresentedObject:(id)representedObject {
@@ -113,13 +103,15 @@
 }
 
 // Internal function that handles the logic of accepting a string from the user
+// TODO: have it dynamically pull out who to send the message to rather than hardcoding to John's ID
 - (void) processUserString:(NSString *)userString{
     // 1 - push message to local store
-    NSString *newMsgID = [[MessageDatabase sharedInstance] newMsg:userString];
+    NSString *newMsgID = [[MessageDatabase sharedInstance] newMsg:userString toContactID:@"1a1a1a"];
     
     // 2 - trigger push of message to gateway
     if([newMsgID isEqualToString:(NSString *)MessageDatabaseInsertError]){
         //TODO: do something appropriate
+        NSLog(@"Error putting new message into BD");
     } else {
         [[GatewayClass sharedInstance] pushUserMsg:newMsgID];
     }
@@ -128,11 +120,5 @@
     [self.usrMsg setStringValue:@""];
     [self._myTableView reloadData];
 }
-
-//-(void) msgToQueue:(NSString *)msg{
-//    NSLog(@"Queuing up the message to send!");
-//    // actually insert it into a queue structure
-//    [self._tableContents insertObject:[NSDictionary dictionaryWithObjectsAndKeys:@"",@"key1",msg,@"key2", nil] atIndex:0];
-//}
 
 @end
