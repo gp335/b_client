@@ -62,11 +62,7 @@
 // TableView Datasource method implementation
 - (id)tableView:(NSTableView *)aTableView objectValueForTableColumn:(NSTableColumn *)aTableColumn row:(NSInteger)rowIndex
 {
-    // NSString *aString = [NSString stringWithFormat:@"%@, Row %ld",[aTableColumn identifier],(long)rowIndex];
-//    NSString *aString;
-//    aString = [[self._tableContents objectAtIndex:rowIndex] objectForKey:[aTableColumn identifier]];
     NSString *aString = [[MessageDatabase sharedInstance] contactAtIndex:rowIndex objectForKey:[aTableColumn identifier]];
-    NSLog(@"About to return a string: %@", aString);
     return aString;
 }
 
@@ -74,8 +70,6 @@
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView
 {
     //we have only one table in the screen and thus we are not checking the row count based on the target table view
-//    long recordCount = [self._tableContents count];
-//    return recordCount;
     return [[MessageDatabase sharedInstance] numContactsInMemory];
 }
 

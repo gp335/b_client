@@ -67,6 +67,7 @@
     [scrollView setAutoresizingMask:NSViewWidthSizable|NSViewHeightSizable];
     [scrollView setDocumentView:self._myTableView];
     [placeholderView addSubview:scrollView];
+    [self->__myTableView scrollRowToVisible:0];
 }
     
 // TableView Datasource method implementation
@@ -93,13 +94,17 @@
 - (IBAction)sendMsg:(id)sender {
     NSString *recMsg = [self.usrMsg stringValue];
     NSLog(@"Pushed send with: [%@]", recMsg);
-    [self processUserString:recMsg];
+    if([self validateStringInput:recMsg]){
+        [self processUserString:recMsg];
+    }
 }
 
 - (IBAction)getUsrMsg:(id)sender {
     NSString *recMsg = [sender stringValue];
     NSLog(@"Hit enter with: [%@]", recMsg);
-    [self processUserString:recMsg];
+    if([self validateStringInput:recMsg]){
+        [self processUserString:recMsg];
+    }
 }
 
 // Internal function that handles the logic of accepting a string from the user
@@ -119,6 +124,14 @@
     // 3 - refresh the view
     [self.usrMsg setStringValue:@""];
     [self._myTableView reloadData];
+}
+
+- (BOOL) validateStringInput:(NSString *)str{
+    // check to see if it's only whitespace characters
+    if([[str stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] isEqualToString:@""]){
+        return NO;
+    }
+    return YES;
 }
 
 @end
