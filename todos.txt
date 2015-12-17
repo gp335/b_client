@@ -1,24 +1,24 @@
 IMMEDIATE:
-*) link the contact name to the "friend" view controller
-*) figure out why messages are coming back in unsorted order
-
-
-DONE) Figure out why duplicates in my initialization of the persistent store
-aren't causing any problems --> They were causing problems.  Now I check for pre-population before running that setup routine.
-
-CANCEL) figure out the right way to link (via delegation) the persistent store and the data in the database classes --> turns out we can't use the NSFetchedResultsController in OS X... so have to do it manually or via bindings.
 
 INTERFACE:
 *) make the text auto-resize nicely if there's more text than one line
 *) make the textcell be the first responder when the app starts up
-*) Fix the table view... make the columns resize and give them better headers
+*) Fix the table view... make the columns resize
 *) Finish the preferences window
 
 FUNCTIONALITY:
-*) Create a list of friends view
-DONE) Finish linking messages to persistent store
 *) Push preferences into the persistent store
 
 NETWORKING:
 *) Create a pound-define file for port numbers to use
 *) remember to run checks on startup to make sure that the desired port is free
+
+
+DONE) Finish linking messages to persistent store
+DONE) Create a list of friends view
+DONE) link the contact name to the "friend" view controller
+DONE) figure out why messages are coming back in unsorted order
+DONE) Figure out why duplicates in my initialization of the persistent store
+aren't causing any problems --> They were causing problems.  Now I check for pre-population before running that setup routine.
+CANCEL) figure out the right way to link (via delegation) the persistent store and the data in the database classes --> turns out we can't use the NSFetchedResultsController in OS X... so have to do it manually or via bindings.
+DONE) give the columns better headers

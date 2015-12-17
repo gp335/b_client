@@ -11,7 +11,7 @@
     <entity name="Message" syncable="YES">
         <attribute name="isInbound" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="msgContent" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="msgLocalID" attributeType="Integer 64" defaultValueString="0" indexed="YES" syncable="YES"/>
+        <attribute name="msgLocalID" attributeType="String" indexed="YES" syncable="YES"/>
         <attribute name="msgState" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="msgTimeReceived" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="msgTimeSent" optional="YES" attributeType="Date" syncable="YES"/>

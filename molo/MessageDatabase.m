@@ -147,7 +147,7 @@ NSString *const msgStateReceivedByContact = @"msgStateReceivedByContact";
     
     [newMessage setValue:msgString forKey:@"msgContent"];
     [newMessage setValue:[NSDate date] forKey:@"msgTimeSent"];
-    [newMessage setValue:[NSNumber numberWithInt:arc4random_uniform(4098)] forKey:@"msgLocalID"];
+    [newMessage setValue:[self genMsgID] forKey:@"msgLocalID"];
     [newMessage setValue:@NO forKey:@"isInbound"];
     [newMessage setValue:msgStateUnsent forKey:@"msgState"];
     
@@ -177,7 +177,7 @@ NSString *const msgStateReceivedByContact = @"msgStateReceivedByContact";
     
     // also insert it into the in-memory object
     [[self->_allMsgsInMemory objectForKey:cID] insertObject:[NSDictionary dictionaryWithObjectsAndKeys:@"",@"key1",msgString,@"key2", nil] atIndex:0];
-    return [[newMessage valueForKey:@"msgLocalID"] stringValue];
+    return [newMessage valueForKey:@"msgLocalID"];
 }
 
 // You should check to make sure that this guy is only called when the database has no contacts... otherwise undefined behavior can occur.
@@ -217,7 +217,7 @@ NSString *const msgStateReceivedByContact = @"msgStateReceivedByContact";
         [newMessage1 setValue:msgStrings1[i] forKey:@"msgContent"];
         [newMessage1 setValue:dateArray[i] forKey:@"msgTimeSent"];
         [newMessage1 setValue:[dateArray[i] dateByAddingTimeInterval:-2] forKey:@"msgTimeReceived"];
-        [newMessage1 setValue:[NSNumber numberWithInt:arc4random_uniform(4098)] forKey:@"msgLocalID"];
+        [newMessage1 setValue:[self genMsgID] forKey:@"msgLocalID"];
         [newMessage1 setValue:msgStateReceivedByContact forKey:@"msgState"];
         if(i % 2 == 0){
             [newMessage1 setValue:@YES forKey:@"isInbound"];
@@ -230,7 +230,7 @@ NSString *const msgStateReceivedByContact = @"msgStateReceivedByContact";
         [newMessage2 setValue:msgStrings2[i] forKey:@"msgContent"];
         [newMessage2 setValue:dateArray[i] forKey:@"msgTimeSent"];
         [newMessage2 setValue:[dateArray[i] dateByAddingTimeInterval:-2] forKey:@"msgTimeReceived"];
-        [newMessage2 setValue:[NSNumber numberWithInt:arc4random_uniform(4098)] forKey:@"msgLocalID"];
+        [newMessage2 setValue:[self genMsgID] forKey:@"msgLocalID"];
         [newMessage2 setValue:msgStateReceivedByContact forKey:@"msgState"];
         if(i % 2 == 0){
             [newMessage2 setValue:@YES forKey:@"isInbound"];
@@ -262,6 +262,10 @@ NSString *const msgStateReceivedByContact = @"msgStateReceivedByContact";
         NSLog(@"Succesfully saved message in context: %@", newContact2.managedObjectContext);
     }
 
+}
+
+- (NSString *)genMsgID{
+    return [NSString stringWithFormat:@"%X%X%X%X", arc4random_uniform(INT_MAX), arc4random_uniform(INT_MAX), arc4random_uniform(INT_MAX), arc4random_uniform(INT_MAX)];
 }
 
 @end

@@ -42,4 +42,7 @@ extern NSString *const msgStateReceivedByContact;
 // Used to push a new message into the database from the sender
 - (NSString *) newMsg:(NSString *)msgString toContactID:(NSString *) cID;
 
+// Used to create a new message ID
+- (NSString *)genMsgID;
+
 @end

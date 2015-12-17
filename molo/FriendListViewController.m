@@ -46,7 +46,7 @@
         assert(self.conversationViewController != nil);
     }
     self.currentContactInFocus = [[MessageDatabase sharedInstance] contactObjectAtIndex:row];
-    NSLog(@"Resetting focus to contactID: %@", [self.conversationViewController._contactInFocus valueForKey:@"contactLocalID"]);
+    NSLog(@"Resetting focus to contactID: %@", [self.currentContactInFocus valueForKey:@"contactLocalID"]);
     [self.conversationViewController updateConversationView];
 }
 

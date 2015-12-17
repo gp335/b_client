@@ -122,12 +122,11 @@
 }
 
 // Internal function that handles the logic of accepting a string from the user
-// TODO: have it dynamically pull out who to send the message to rather than hardcoding to John's ID
 - (void) processUserString:(NSString *)userString{
     // 1 - push message to local store
     NSString *contactIDInFocus = [self->friendListViewController.currentContactInFocus valueForKey:@"contactLocalID"];
     NSString *newMsgID = [[MessageDatabase sharedInstance] newMsg:userString toContactID:contactIDInFocus];
-    
+    NSLog(@"The message ID we got was: %@", newMsgID);
     // 2 - trigger push of message to gateway
     if([newMsgID isEqualToString:(NSString *)MessageDatabaseInsertError]){
         //TODO: do something appropriate
@@ -135,7 +134,6 @@
     } else {
         [[GatewayClass sharedInstance] pushUserMsg:newMsgID];
     }
-    
     // 3 - refresh the view
     [self.usrMsg setStringValue:@""];
     [self._myTableView reloadData];
