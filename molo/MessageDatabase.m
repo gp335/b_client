@@ -173,53 +173,85 @@ NSString *const msgStateReceivedByContact = @"msgStateReceivedByContact";
 // You should check to make sure that this guy is only called when the database has no contacts... otherwise undefined behavior can occur.
 - (void) populateTestMDB{
     // 1a - The contacts we'll populate the db with first
-    NSString *contactName = @"John";
-    NSString *contactLocalID = @"1a1a1a";
+    NSString *contact1Name = @"John";
+    NSString *contact1LocalID = @"1a1a1a";
+    
+    NSString *contact2Name = @"Ethel";
+    NSString *contact2LocalID = @"2b2b2b";
     
     // 1c - Push the contact into the persistent store
     NSEntityDescription *entityContactDescription = [NSEntityDescription entityForName:@"Contact" inManagedObjectContext:self->managedObjectContext];
-    NSManagedObject *newContact = [[NSManagedObject alloc] initWithEntity:entityContactDescription insertIntoManagedObjectContext:self->managedObjectContext];
-    [newContact setValue:contactName forKey:@"contactName"];
-    [newContact setValue:contactLocalID forKey:@"contactLocalID"];
+    NSManagedObject *newContact1 = [[NSManagedObject alloc] initWithEntity:entityContactDescription insertIntoManagedObjectContext:self->managedObjectContext];
+    [newContact1 setValue:contact1Name forKey:@"contactName"];
+    [newContact1 setValue:contact1LocalID forKey:@"contactLocalID"];
+
+    NSManagedObject *newContact2 = [[NSManagedObject alloc] initWithEntity:entityContactDescription insertIntoManagedObjectContext:self->managedObjectContext];
+    [newContact2 setValue:contact2Name forKey:@"contactName"];
+    [newContact2 setValue:contact2LocalID forKey:@"contactLocalID"];
     
     // 2a - The messages we'll populate the db with first
-    NSArray *msgStrings = [[NSArray alloc] initWithObjects: @"What up dog!", @"Not much how about you?", @"Just netflix and cooling.", @"Sweet.", nil];
+    NSArray *msgStrings1 = [[NSArray alloc] initWithObjects: @"What up dog!", @"Not much how about you?", @"Just netflix and cooling.", @"Sweet.", nil];
+    NSArray *msgStrings2 = [[NSArray alloc] initWithObjects: @"O hai!", @"Hai back", @"Looking good.", @"KTHNKBAI.", nil];
     NSDate *dateNow = [NSDate date];
     NSArray *dateArray = [[NSArray alloc] initWithObjects:  dateNow, [dateNow dateByAddingTimeInterval:-10],
                                                             [dateNow dateByAddingTimeInterval:-20],
                                                             [dateNow dateByAddingTimeInterval:-30], nil];
-    NSLog(@"Initializing DB with messages: %@", msgStrings);
-    
+    NSLog(@"Initializing DB with contact 1 messages: %@", msgStrings1);
+    NSLog(@"Initializing DB with contact 2 messages: %@", msgStrings2);
     // 2b - Push the messages into the persistent store
-    NSMutableSet *msgSet = [[NSMutableSet alloc] init];
+    NSMutableSet *msgSet1 = [[NSMutableSet alloc] init];
+    NSMutableSet *msgSet2 = [[NSMutableSet alloc] init];
     NSEntityDescription *entityMessageDescription = [NSEntityDescription entityForName:@"Message" inManagedObjectContext:self->managedObjectContext];
     for(int i = 0; i < 4; i++){
-        NSManagedObject *newMessage = [[NSManagedObject alloc] initWithEntity:entityMessageDescription insertIntoManagedObjectContext:self->managedObjectContext];
-        [newMessage setValue:msgStrings[i] forKey:@"msgContent"];
-        [newMessage setValue:dateArray[i] forKey:@"msgTimeSent"];
-        [newMessage setValue:[dateArray[i] dateByAddingTimeInterval:-2] forKey:@"msgTimeReceived"];
-        [newMessage setValue:[NSNumber numberWithInt:arc4random_uniform(4098)] forKey:@"msgLocalID"];
-        [newMessage setValue:msgStateReceivedByContact forKey:@"msgState"];
+        NSManagedObject *newMessage1 = [[NSManagedObject alloc] initWithEntity:entityMessageDescription insertIntoManagedObjectContext:self->managedObjectContext];
+        [newMessage1 setValue:msgStrings1[i] forKey:@"msgContent"];
+        [newMessage1 setValue:dateArray[i] forKey:@"msgTimeSent"];
+        [newMessage1 setValue:[dateArray[i] dateByAddingTimeInterval:-2] forKey:@"msgTimeReceived"];
+        [newMessage1 setValue:[NSNumber numberWithInt:arc4random_uniform(4098)] forKey:@"msgLocalID"];
+        [newMessage1 setValue:msgStateReceivedByContact forKey:@"msgState"];
         if(i % 2 == 0){
-            [newMessage setValue:@YES forKey:@"isInbound"];
+            [newMessage1 setValue:@YES forKey:@"isInbound"];
         } else {
-            [newMessage setValue:@NO forKey:@"isInbound"];
+            [newMessage1 setValue:@NO forKey:@"isInbound"];
         }
-        [msgSet addObject:newMessage];
+        [msgSet1 addObject:newMessage1];
+
+        NSManagedObject *newMessage2 = [[NSManagedObject alloc] initWithEntity:entityMessageDescription insertIntoManagedObjectContext:self->managedObjectContext];
+        [newMessage2 setValue:msgStrings1[i] forKey:@"msgContent"];
+        [newMessage2 setValue:dateArray[i] forKey:@"msgTimeSent"];
+        [newMessage2 setValue:[dateArray[i] dateByAddingTimeInterval:-2] forKey:@"msgTimeReceived"];
+        [newMessage2 setValue:[NSNumber numberWithInt:arc4random_uniform(4098)] forKey:@"msgLocalID"];
+        [newMessage2 setValue:msgStateReceivedByContact forKey:@"msgState"];
+        if(i % 2 == 0){
+            [newMessage2 setValue:@YES forKey:@"isInbound"];
+        } else {
+            [newMessage2 setValue:@NO forKey:@"isInbound"];
+        }
+        [msgSet2 addObject:newMessage2];
+
     }
-    NSLog(@"Have new set of messages: %@", msgSet);
+    NSLog(@"Have new set of 1 messages: %@", msgSet1);
+    NSLog(@"Have new set of 2 messages: %@", msgSet2);
     
     // 3 - Link the messages to the contact
-    [newContact setValue:[NSSet setWithSet:msgSet] forKey:@"messages"];
+    [newContact1 setValue:[NSSet setWithSet:msgSet1] forKey:@"messages"];
+    [newContact2 setValue:[NSSet setWithSet:msgSet2] forKey:@"messages"];
     
     // 4 - Save it all
     NSError *error = nil;
-    if (![newContact.managedObjectContext save:&error]) {
+    if (![newContact1.managedObjectContext save:&error]) {
         NSLog(@"Unable to save managed object context.");
         NSLog(@"%@, %@", error, error.localizedDescription);
     } else {
-        NSLog(@"Succesfully saved message in context: %@", newContact.managedObjectContext);
+        NSLog(@"Succesfully saved message in context: %@", newContact1.managedObjectContext);
     }
+    if (![newContact2.managedObjectContext save:&error]) {
+        NSLog(@"Unable to save managed object context.");
+        NSLog(@"%@, %@", error, error.localizedDescription);
+    } else {
+        NSLog(@"Succesfully saved message in context: %@", newContact2.managedObjectContext);
+    }
+
 }
 
 @end
