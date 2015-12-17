@@ -80,17 +80,24 @@ NSString *const msgStateReceivedByContact = @"msgStateReceivedByContact";
 
 
 - (NSString *) msgAtIndex:(NSInteger)index objectForKey:(NSString *)key forContactID:(NSString *)cID{
-    return [[[self->_allMsgsInMemory objectForKey:cID] objectAtIndex:index] objectForKey:key];
+    NSString *returnString = [[[self->_allMsgsInMemory objectForKey:cID] objectAtIndex:index] objectForKey:key];
+    NSLog(@"About to return string %@ for index %li, key: %@, and contactID: %@", returnString, index, key, cID);
+    NSLog(@"The full message index is: %@", self->_allMsgsInMemory);
+    return returnString;
 }
 
+
 // Function assumes it's given an index that is within the number of contacts
-- (NSString *) contactAtIndex:(NSInteger)index objectForKey:(NSString *)key{
+- (NSManagedObject *) contactObjectAtIndex:(NSInteger)index{
     NSArray *contactArray = [self->_managedObjectContacts allValues];
     NSArray *sortDescriptors = [[NSArray alloc] initWithObjects: [[NSSortDescriptor alloc] initWithKey:@"contactName" ascending:YES], nil];
     NSArray *sortedContactArray = [contactArray sortedArrayUsingDescriptors:sortDescriptors];
-    NSLog(@"Returning index [%li] with array: %@", index, sortedContactArray);
     assert(index < [sortedContactArray count]);
-    return [sortedContactArray[index] valueForKey:@"contactName"];
+    return sortedContactArray[index];
+}
+
+- (NSString *) contactNameAtIndex:(NSInteger)index{
+    return [[self contactObjectAtIndex:index] valueForKey:@"contactName"];
 }
 
 
@@ -102,8 +109,8 @@ NSString *const msgStateReceivedByContact = @"msgStateReceivedByContact";
         NSMutableSet *msgSet = [contactObj mutableSetValueForKey:@"messages"];
         NSArray *sortDescriptors = [[NSArray alloc] initWithObjects: [[NSSortDescriptor alloc] initWithKey:@"msgTimeSent" ascending:YES], nil];
         NSArray *sortedMsgArray = [msgSet sortedArrayUsingDescriptors:sortDescriptors];
-//        NSLog(@"Sorted msg array came back as: %@", sortedMsgArray);
-        [self->_allMsgsInMemory setObject:[msgSet sortedArrayUsingDescriptors:sortDescriptors] forKey:[contactObj valueForKey:@"contactLocalID"]];
+        NSLog(@"Sorted msg array came back as: %@", sortedMsgArray);
+//        [self->_allMsgsInMemory setObject:[msgSet sortedArrayUsingDescriptors:sortDescriptors] forKey:[contactObj valueForKey:@"contactLocalID"]];
         
         NSMutableArray *cummArray = [[NSMutableArray alloc] init];
         for(NSManagedObject *msgObj in sortedMsgArray){
@@ -114,6 +121,8 @@ NSString *const msgStateReceivedByContact = @"msgStateReceivedByContact";
             }
         }
         [self->_allMsgsInMemory setObject:cummArray forKey:[contactObj valueForKey:@"contactLocalID"]];
+        NSLog(@"Final msg array is set as: %@", cummArray);
+
     }
     
 //    NSLog(@"All messages are now: %@", self->_allMsgsInMemory);
@@ -191,7 +200,7 @@ NSString *const msgStateReceivedByContact = @"msgStateReceivedByContact";
     
     // 2a - The messages we'll populate the db with first
     NSArray *msgStrings1 = [[NSArray alloc] initWithObjects: @"What up dog!", @"Not much how about you?", @"Just netflix and cooling.", @"Sweet.", nil];
-    NSArray *msgStrings2 = [[NSArray alloc] initWithObjects: @"O hai!", @"Hai back", @"Looking good.", @"KTHNKBAI.", nil];
+    NSArray *msgStrings2 = [[NSArray alloc] initWithObjects: @"O hai!", @"Hai back", @"Looking good.", @"KTHNXSBAI.", nil];
     NSDate *dateNow = [NSDate date];
     NSArray *dateArray = [[NSArray alloc] initWithObjects:  dateNow, [dateNow dateByAddingTimeInterval:-10],
                                                             [dateNow dateByAddingTimeInterval:-20],
@@ -217,7 +226,7 @@ NSString *const msgStateReceivedByContact = @"msgStateReceivedByContact";
         [msgSet1 addObject:newMessage1];
 
         NSManagedObject *newMessage2 = [[NSManagedObject alloc] initWithEntity:entityMessageDescription insertIntoManagedObjectContext:self->managedObjectContext];
-        [newMessage2 setValue:msgStrings1[i] forKey:@"msgContent"];
+        [newMessage2 setValue:msgStrings2[i] forKey:@"msgContent"];
         [newMessage2 setValue:dateArray[i] forKey:@"msgTimeSent"];
         [newMessage2 setValue:[dateArray[i] dateByAddingTimeInterval:-2] forKey:@"msgTimeReceived"];
         [newMessage2 setValue:[NSNumber numberWithInt:arc4random_uniform(4098)] forKey:@"msgLocalID"];

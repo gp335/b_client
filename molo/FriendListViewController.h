@@ -18,4 +18,6 @@
 @property NSMutableArray *_tableContents;
 @property ExtendedNSTableView *_myTableView;
 
+@property (weak, nonatomic) NSManagedObject *currentContactInFocus;
+
 @end

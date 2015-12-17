@@ -7,7 +7,7 @@
 //
 
 #import "FriendListViewController.h"
-
+#import "AppDelegate.h"
 @interface FriendListViewController ()
 
 @end
@@ -16,6 +16,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    AppDelegate *appD = [[NSApplication sharedApplication] delegate];
+    appD.friendListViewController = self;
+
     // Do view setup here.
     self._tableContents =
     [[NSMutableArray alloc] initWithObjects:
@@ -24,6 +28,7 @@
      [NSDictionary dictionaryWithObjectsAndKeys:@"Friend #3",@"key1", nil],
      nil];
     [self createTableView];
+    self.currentContactInFocus = [[MessageDatabase sharedInstance] contactObjectAtIndex:0];
     self._myTableView.extendedDelegate = self;
 }
 
@@ -68,7 +73,7 @@
 // TableView Datasource method implementation
 - (id)tableView:(NSTableView *)aTableView objectValueForTableColumn:(NSTableColumn *)aTableColumn row:(NSInteger)rowIndex
 {
-    NSString *aString = [[MessageDatabase sharedInstance] contactAtIndex:rowIndex objectForKey:[aTableColumn identifier]];
+    NSString *aString = [[MessageDatabase sharedInstance] contactNameAtIndex:rowIndex];
     return aString;
 }
 

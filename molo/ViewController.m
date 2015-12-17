@@ -8,19 +8,24 @@
 
 #import "ViewController.h"
 #import "cppTestWrapper.h"
+#import "AppDelegate.h"
 
 @interface ViewController ()
 
 @end
 
-@implementation ViewController
+@implementation ViewController{
+    FriendListViewController *friendListViewController;
+}
 
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
-    // load existing messages
+    AppDelegate *appD = [[NSApplication sharedApplication] delegate];
+    appD.messagesViewController = self;
+    friendListViewController = appD.friendListViewController;
+    assert(friendListViewController != nil);
     
     // just some C++ tests...
     NSLog(@"clearly doing something");
@@ -71,16 +76,18 @@
 // TableView Datasource method implementation
 - (id)tableView:(NSTableView *)aTableView objectValueForTableColumn:(NSTableColumn *)aTableColumn row:(NSInteger)rowIndex
 {
-    NSString *aString = [[MessageDatabase sharedInstance] msgAtIndex:rowIndex objectForKey:[aTableColumn identifier] forContactID:@"1a1a1a"];
+    NSString *contactIDInFocus = [self->friendListViewController.currentContactInFocus valueForKey:@"contactLocalID"];
+    NSLog(@"Looking for contact ID: %@", contactIDInFocus);
+    NSString *aString = [[MessageDatabase sharedInstance] msgAtIndex:rowIndex objectForKey:[aTableColumn identifier] forContactID:contactIDInFocus];
     return aString;
 }
 
 // TableView Datasource method implementation
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView
 {
-    //we have only one table in the screen and thus we are not checking the row count based on the target table view
-    NSLog(@"Checking for length, which seems to be: %li", [[MessageDatabase sharedInstance] numMsgsInMemoryForContactID:@"1a1a1a"]);
-    return [[MessageDatabase sharedInstance] numMsgsInMemoryForContactID:@"1a1a1a"];
+    NSString *contactIDInFocus = [self->friendListViewController.currentContactInFocus valueForKey:@"contactLocalID"];
+    NSLog(@"Checking for length, which seems to be: %li", [[MessageDatabase sharedInstance] numMsgsInMemoryForContactID:contactIDInFocus]);
+    return [[MessageDatabase sharedInstance] numMsgsInMemoryForContactID:contactIDInFocus];
 }
 
 - (void)setRepresentedObject:(id)representedObject {

@@ -19,12 +19,11 @@
 - (IBAction)getUsrMsg:(id)sender;
 
 
-@property (weak) IBOutlet NSTextFieldCell *usrMsg;
+@property (weak, nonatomic) IBOutlet NSTextFieldCell *usrMsg;
 
 
 @property NSTableView *_myTableView;
-
-
+@property (weak, nonatomic) NSManagedObject *_contactInFocus;
 
 @end
 

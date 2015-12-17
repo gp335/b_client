@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+@import CoreData;
 
 #pragma mark - constants
 extern NSInteger const initialNumMsgsToLoad;
@@ -27,7 +28,10 @@ extern NSString *const msgStateReceivedByContact;
 - (NSString *) msgAtIndex:(NSInteger)index objectForKey:(NSString *)key forContactID:(NSString *)cID;
 
 // Used to pull in the list of friends for view controllers
-- (NSString *) contactAtIndex:(NSInteger)index objectForKey:(NSString *)key;
+- (NSString *) contactNameAtIndex:(NSInteger)index;
+
+// Used to pull in the list of friends for view controllers
+- (NSManagedObject *) contactObjectAtIndex:(NSInteger)index;
 
 // Used to see how many messages we have stored in memory
 - (NSInteger) numMsgsInMemoryForContactID: (NSString *)cID;
