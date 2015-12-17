@@ -83,14 +83,13 @@ NSString *const msgStateReceivedByContact = @"msgStateReceivedByContact";
     return [[[self->_allMsgsInMemory objectForKey:cID] objectAtIndex:index] objectForKey:key];
 }
 
-// call this if we need to pull more messages into the store
+// call this if we need to pull messages into the store
 - (void) loadMessages {
-    
-    // Run through all the contacts
+    // Run through all the contacts and pull their messages
     for(NSManagedObject *contactObj in [self->_managedObjectContacts allValues]){
         NSLog(@"Loading messages for contact name: %@ and ID: %@", [contactObj valueForKey:@"contactName"], [contactObj valueForKey:@"contactLocalID"]);
         NSMutableSet *msgSet = [contactObj mutableSetValueForKey:@"messages"];
-        NSArray *sortDescriptors = [[NSArray alloc] initWithObjects: [[NSSortDescriptor alloc] initWithKey:@"msgTimeReceived" ascending:NO], nil];
+        NSArray *sortDescriptors = [[NSArray alloc] initWithObjects: [[NSSortDescriptor alloc] initWithKey:@"msgTimeSent" ascending:YES], nil];
         NSArray *sortedMsgArray = [msgSet sortedArrayUsingDescriptors:sortDescriptors];
         NSLog(@"Sorted msg array came back as: %@", sortedMsgArray);
         [self->_allMsgsInMemory setObject:[msgSet sortedArrayUsingDescriptors:sortDescriptors] forKey:[contactObj valueForKey:@"contactLocalID"]];
@@ -173,10 +172,9 @@ NSString *const msgStateReceivedByContact = @"msgStateReceivedByContact";
     // 2a - The messages we'll populate the db with first
     NSArray *msgStrings = [[NSArray alloc] initWithObjects: @"What up dog!", @"Not much how about you?", @"Just netflix and cooling.", @"Sweet.", nil];
     NSDate *dateNow = [NSDate date];
-    NSArray *dateArray = [[NSArray alloc] initWithObjects:  [dateNow dateByAddingTimeInterval:-30],
+    NSArray *dateArray = [[NSArray alloc] initWithObjects:  dateNow, [dateNow dateByAddingTimeInterval:-10],
                                                             [dateNow dateByAddingTimeInterval:-20],
-                                                            [dateNow dateByAddingTimeInterval:-10],
-                                                            dateNow, nil];
+                                                            [dateNow dateByAddingTimeInterval:-30], nil];
     NSLog(@"Initializing DB with messages: %@", msgStrings);
     
     // 2b - Push the messages into the persistent store
