@@ -25,7 +25,6 @@ NSString *const msgStateReceivedByContact = @"msgStateReceivedByContact";
 @implementation MessageDatabase {
     NSManagedObjectContext *managedObjectContext;
     NSMutableDictionary *_allMsgsInMemory;
-//    NSMutableArray *_msgsInMemory;
     NSMutableDictionary *_managedObjectContacts;
 }
 
@@ -44,9 +43,6 @@ NSString *const msgStateReceivedByContact = @"msgStateReceivedByContact";
     if (self) {
         self->managedObjectContext = [[[NSApplication sharedApplication] delegate] managedObjectContext];
 
-        // TODO: remove before shipping :)
-        [self populateTestMDB];
-
         self->_managedObjectContacts = [[NSMutableDictionary alloc] init];
         NSFetchRequest *fetchContactsRequest = [[NSFetchRequest alloc] init];
         NSEntityDescription *entity = [NSEntityDescription entityForName:@"Contact" inManagedObjectContext:self->managedObjectContext];
@@ -58,6 +54,17 @@ NSString *const msgStateReceivedByContact = @"msgStateReceivedByContact";
             NSLog(@"%@, %@", contactsError, contactsError.localizedDescription);
         } else {
             NSLog(@"Contacts result: %@", contactsResult);
+            // TODO: remove before shipping :)
+            // The below clause is so that we can start the database with a few examples....
+            if(0 == [contactsResult count]){
+                [self populateTestMDB];
+                contactsResult = [self->managedObjectContext executeFetchRequest:fetchContactsRequest error:&contactsError];
+                if (contactsError) {
+                    NSLog(@"Unable to execute contacts fetch request after populating the testDB.");
+                    NSLog(@"%@, %@", contactsError, contactsError.localizedDescription);
+                }
+            }
+            // Hold onto the contacts we got from the database
             for(NSManagedObject *contactObject in contactsResult){
                 [self->_managedObjectContacts setObject:contactObject forKey:[contactObject valueForKey:@"contactLocalID"]];
             }
@@ -154,7 +161,10 @@ NSString *const msgStateReceivedByContact = @"msgStateReceivedByContact";
     NSString *contactName = @"John";
     NSString *contactLocalID = @"1a1a1a";
     
-    // 1b - Push the contact into the persistent store
+    // 1b - Check to make sure that the DB hasn't already been initialized
+    // TODO - implement this
+    
+    // 1c - Push the contact into the persistent store
     NSEntityDescription *entityContactDescription = [NSEntityDescription entityForName:@"Contact" inManagedObjectContext:self->managedObjectContext];
     NSManagedObject *newContact = [[NSManagedObject alloc] initWithEntity:entityContactDescription insertIntoManagedObjectContext:self->managedObjectContext];
     [newContact setValue:contactName forKey:@"contactName"];

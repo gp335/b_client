@@ -10,7 +10,6 @@
 #import "MessageDatabase.h"
 #import "GatewayClass.h"
 
-
 @interface ViewController : NSViewController <NSTableViewDelegate, NSTableViewDataSource>{
     
     IBOutlet NSView *placeholderView;
