@@ -8,6 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import "MessageDatabase.h"
+#import "ViewController.h"
 #import "ExtendedNSTableView.h"
 
 @interface FriendListViewController : NSViewController <ExtendedNSTableViewDelegate, NSTableViewDelegate, NSTableViewDataSource>{
@@ -18,6 +19,7 @@
 @property NSMutableArray *_tableContents;
 @property ExtendedNSTableView *_myTableView;
 
+@property (weak, nonatomic) ViewController *conversationViewController;
 @property (weak, nonatomic) NSManagedObject *currentContactInFocus;
 
 @end

@@ -81,8 +81,8 @@ NSString *const msgStateReceivedByContact = @"msgStateReceivedByContact";
 
 - (NSString *) msgAtIndex:(NSInteger)index objectForKey:(NSString *)key forContactID:(NSString *)cID{
     NSString *returnString = [[[self->_allMsgsInMemory objectForKey:cID] objectAtIndex:index] objectForKey:key];
-    NSLog(@"About to return string %@ for index %li, key: %@, and contactID: %@", returnString, index, key, cID);
-    NSLog(@"The full message index is: %@", self->_allMsgsInMemory);
+//    NSLog(@"About to return string %@ for index %li, key: %@, and contactID: %@", returnString, index, key, cID);
+//    NSLog(@"The full message index is: %@", self->_allMsgsInMemory);
     return returnString;
 }
 
@@ -93,6 +93,7 @@ NSString *const msgStateReceivedByContact = @"msgStateReceivedByContact";
     NSArray *sortDescriptors = [[NSArray alloc] initWithObjects: [[NSSortDescriptor alloc] initWithKey:@"contactName" ascending:YES], nil];
     NSArray *sortedContactArray = [contactArray sortedArrayUsingDescriptors:sortDescriptors];
     assert(index < [sortedContactArray count]);
+//    NSLog(@"Returning object with name: %@", [sortedContactArray[index] valueForKey:@"contactLocalID"]);
     return sortedContactArray[index];
 }
 
@@ -109,7 +110,7 @@ NSString *const msgStateReceivedByContact = @"msgStateReceivedByContact";
         NSMutableSet *msgSet = [contactObj mutableSetValueForKey:@"messages"];
         NSArray *sortDescriptors = [[NSArray alloc] initWithObjects: [[NSSortDescriptor alloc] initWithKey:@"msgTimeSent" ascending:YES], nil];
         NSArray *sortedMsgArray = [msgSet sortedArrayUsingDescriptors:sortDescriptors];
-        NSLog(@"Sorted msg array came back as: %@", sortedMsgArray);
+//        NSLog(@"Sorted msg array came back as: %@", sortedMsgArray);
 //        [self->_allMsgsInMemory setObject:[msgSet sortedArrayUsingDescriptors:sortDescriptors] forKey:[contactObj valueForKey:@"contactLocalID"]];
         
         NSMutableArray *cummArray = [[NSMutableArray alloc] init];
@@ -121,7 +122,7 @@ NSString *const msgStateReceivedByContact = @"msgStateReceivedByContact";
             }
         }
         [self->_allMsgsInMemory setObject:cummArray forKey:[contactObj valueForKey:@"contactLocalID"]];
-        NSLog(@"Final msg array is set as: %@", cummArray);
+//        NSLog(@"Final msg array is set as: %@", cummArray);
 
     }
     

@@ -77,7 +77,7 @@
 - (id)tableView:(NSTableView *)aTableView objectValueForTableColumn:(NSTableColumn *)aTableColumn row:(NSInteger)rowIndex
 {
     NSString *contactIDInFocus = [self->friendListViewController.currentContactInFocus valueForKey:@"contactLocalID"];
-    NSLog(@"Looking for contact ID: %@", contactIDInFocus);
+//    NSLog(@"Looking for contact ID: %@", contactIDInFocus);
     NSString *aString = [[MessageDatabase sharedInstance] msgAtIndex:rowIndex objectForKey:[aTableColumn identifier] forContactID:contactIDInFocus];
     return aString;
 }
@@ -93,6 +93,11 @@
 - (void)setRepresentedObject:(id)representedObject {
     [super setRepresentedObject:representedObject];
     // Update the view, if already loaded.
+}
+
+
+-(void)updateConversationView{
+    [self->__myTableView reloadData];
 }
 
 
@@ -116,7 +121,8 @@
 // TODO: have it dynamically pull out who to send the message to rather than hardcoding to John's ID
 - (void) processUserString:(NSString *)userString{
     // 1 - push message to local store
-    NSString *newMsgID = [[MessageDatabase sharedInstance] newMsg:userString toContactID:@"1a1a1a"];
+    NSString *contactIDInFocus = [self->friendListViewController.currentContactInFocus valueForKey:@"contactLocalID"];
+    NSString *newMsgID = [[MessageDatabase sharedInstance] newMsg:userString toContactID:contactIDInFocus];
     
     // 2 - trigger push of message to gateway
     if([newMsgID isEqualToString:(NSString *)MessageDatabaseInsertError]){
