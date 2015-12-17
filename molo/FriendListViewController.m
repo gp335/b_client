@@ -54,16 +54,11 @@
     NSScrollView *scrollView = [[NSScrollView alloc] initWithFrame:friendListPlaceholderView.bounds];
     [scrollView setBorderType:NSBezelBorder];
     self._myTableView = [[ExtendedNSTableView alloc] initWithFrame:friendListPlaceholderView.bounds];
-    NSTableColumn *tCol;
-    int noOfColumns = 1;
-    for (int i=0; i<noOfColumns; i++)
-    {
-        tCol = [[NSTableColumn alloc] initWithIdentifier:[NSString stringWithFormat:@"key%d",i+1]];
-        // TODO: set width dynamically based on size of the window
-        [tCol setWidth:200.0];
-        [[tCol headerCell] setStringValue:[NSString stringWithFormat:@"Column %d",i+1]];
-        [self._myTableView addTableColumn:tCol];
-    }
+    NSTableColumn *tCol = [[NSTableColumn alloc] initWithIdentifier:[NSString stringWithFormat:@"key1"]];
+    // TODO: set width dynamically based on size of the window
+    [tCol setWidth:200.0];
+    [[tCol headerCell] setStringValue:[NSString stringWithFormat:@"Friends"]];
+    [self._myTableView addTableColumn:tCol];
     
     // TODO: make all of this formatting nicer
     [self._myTableView setUsesAlternatingRowBackgroundColors:NO];

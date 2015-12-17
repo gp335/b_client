@@ -43,17 +43,18 @@
     NSScrollView *scrollView = [[NSScrollView alloc] initWithFrame:placeholderView.bounds];
     [scrollView setBorderType:NSBezelBorder];
     self._myTableView = [[NSTableView alloc] initWithFrame:placeholderView.bounds];
-    NSTableColumn *tCol;
-    int noOfColumns = 2;
-    for (int i=0; i<noOfColumns; i++)
-    {
-        tCol = [[NSTableColumn alloc] initWithIdentifier:[NSString stringWithFormat:@"key%d",i+1]];
-        // TODO: set width dynamically based on size of the window
-        [tCol setWidth:200.0];
-        [[tCol headerCell] setStringValue:[NSString stringWithFormat:@"Column %d",i+1]];
-        [self._myTableView addTableColumn:tCol];
-    }
     
+    NSTableColumn *friendCol = [[NSTableColumn alloc] initWithIdentifier:[NSString stringWithFormat:@"key1"]];
+    NSTableColumn *userCol = [[NSTableColumn alloc] initWithIdentifier:[NSString stringWithFormat:@"key2"]];
+    // TODO: set width dynamically based on size of the window
+    [friendCol setWidth:200.0];
+    [userCol setWidth:200.0];
+    [[friendCol headerCell] setStringValue:[self->friendListViewController.currentContactInFocus valueForKey:@"contactName"]];
+    // TODO: pull in the user's name here once we have preferences fully functioning
+    [[userCol headerCell] setStringValue:[NSString stringWithFormat:@"Me!"]];
+    [self._myTableView addTableColumn:friendCol];
+    [self._myTableView addTableColumn:userCol];
+
     // TODO: make all of this formatting nicer
     [self._myTableView setUsesAlternatingRowBackgroundColors:NO];
     [self._myTableView setGridStyleMask:NSTableViewSolidVerticalGridLineMask];
@@ -97,7 +98,10 @@
 
 
 -(void)updateConversationView{
+    [[[self->__myTableView tableColumnWithIdentifier:@"key1"] headerCell] setStringValue:[self->friendListViewController.currentContactInFocus valueForKey:@"contactName"]];
     [self->__myTableView reloadData];
+    // TODO: instead of scrolling to row zero, remember where the user scrolled to last in the conversation
+    [self->__myTableView scrollRowToVisible:0];
 }
 
 
