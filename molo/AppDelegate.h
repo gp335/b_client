@@ -23,5 +23,7 @@
 @property (weak, nonatomic) ViewController *messagesViewController;
 @property (weak, nonatomic) FriendListViewController *friendListViewController;
 
+-(void)closePreferencesWindow;
+
 @end
 

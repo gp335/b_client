@@ -7,6 +7,7 @@
 //
 
 #import "userPreferenceNSViewController.h"
+#import "AppDelegate.h"
 
 @interface userPreferenceNSViewController ()
 
@@ -40,7 +41,9 @@
     NSLog(@"THe parent NSMenuItem: %@", [self parentNSMenuItem]);
     NSLog(@"The parent of the parent is: %@", [[self parentViewController] parentViewController]);
     NSLog(@"The presenting of the parent is: %@", [[self parentViewController] presentingViewController]);
-    [self dismissController:self];
+    AppDelegate *appD = [[NSApplication sharedApplication] delegate];
+    [appD closePreferencesWindow];
+//    [self dismissController:self];
 }
 
 @end

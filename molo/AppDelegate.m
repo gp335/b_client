@@ -26,6 +26,19 @@
     // Insert code here to tear down your application
 }
 
+-(void)closePreferencesWindow{
+    NSLog(@"About to close the preferences window!");
+    NSLog(@"Here are the windows we have: %@",[[NSApplication sharedApplication] windows]);
+    NSWindow *prefWindow = nil;
+    for(NSWindow *window in [[NSApplication sharedApplication] windows]){
+        NSLog(@"Window: %@ with title: %@", window, [window title]);
+        if([[window title] isEqualToString:@"Preferences"]){
+            prefWindow = window;
+        }
+    }
+    [prefWindow close];
+}
+
 #pragma mark - Core Data stack
 
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;

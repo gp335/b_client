@@ -110,8 +110,6 @@ NSString *const msgStateReceivedByContact = @"msgStateReceivedByContact";
         NSMutableSet *msgSet = [contactObj mutableSetValueForKey:@"messages"];
         NSArray *sortDescriptors = [[NSArray alloc] initWithObjects: [[NSSortDescriptor alloc] initWithKey:@"msgTimeSent" ascending:YES], nil];
         NSArray *sortedMsgArray = [msgSet sortedArrayUsingDescriptors:sortDescriptors];
-//        NSLog(@"Sorted msg array came back as: %@", sortedMsgArray);
-//        [self->_allMsgsInMemory setObject:[msgSet sortedArrayUsingDescriptors:sortDescriptors] forKey:[contactObj valueForKey:@"contactLocalID"]];
         
         NSMutableArray *cummArray = [[NSMutableArray alloc] init];
         for(NSManagedObject *msgObj in sortedMsgArray){
@@ -122,11 +120,9 @@ NSString *const msgStateReceivedByContact = @"msgStateReceivedByContact";
             }
         }
         [self->_allMsgsInMemory setObject:cummArray forKey:[contactObj valueForKey:@"contactLocalID"]];
-//        NSLog(@"Final msg array is set as: %@", cummArray);
 
     }
     
-//    NSLog(@"All messages are now: %@", self->_allMsgsInMemory);
 }
 
 
