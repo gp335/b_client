@@ -78,10 +78,21 @@ NSString *const msgStateReceivedByContact = @"msgStateReceivedByContact";
     return self;
 }
 
-// Used to pull in messages in sequential order for view controllers
+
 - (NSString *) msgAtIndex:(NSInteger)index objectForKey:(NSString *)key forContactID:(NSString *)cID{
     return [[[self->_allMsgsInMemory objectForKey:cID] objectAtIndex:index] objectForKey:key];
 }
+
+// Function assumes it's given an index that is within the number of contacts
+- (NSString *) contactAtIndex:(NSInteger)index objectForKey:(NSString *)key{
+    NSArray *contactArray = [self->_managedObjectContacts allValues];
+    NSArray *sortDescriptors = [[NSArray alloc] initWithObjects: [[NSSortDescriptor alloc] initWithKey:@"contactName" ascending:YES], nil];
+    NSArray *sortedContactArray = [contactArray sortedArrayUsingDescriptors:sortDescriptors];
+    NSLog(@"Returning index [%li] with array: %@", index, sortedContactArray);
+    assert(index < [sortedContactArray count]);
+    return [sortedContactArray[index] valueForKey:@"contactName"];
+}
+
 
 // call this if we need to pull messages into the store
 - (void) loadMessages {
@@ -91,7 +102,7 @@ NSString *const msgStateReceivedByContact = @"msgStateReceivedByContact";
         NSMutableSet *msgSet = [contactObj mutableSetValueForKey:@"messages"];
         NSArray *sortDescriptors = [[NSArray alloc] initWithObjects: [[NSSortDescriptor alloc] initWithKey:@"msgTimeSent" ascending:YES], nil];
         NSArray *sortedMsgArray = [msgSet sortedArrayUsingDescriptors:sortDescriptors];
-        NSLog(@"Sorted msg array came back as: %@", sortedMsgArray);
+//        NSLog(@"Sorted msg array came back as: %@", sortedMsgArray);
         [self->_allMsgsInMemory setObject:[msgSet sortedArrayUsingDescriptors:sortDescriptors] forKey:[contactObj valueForKey:@"contactLocalID"]];
         
         NSMutableArray *cummArray = [[NSMutableArray alloc] init];
@@ -105,12 +116,17 @@ NSString *const msgStateReceivedByContact = @"msgStateReceivedByContact";
         [self->_allMsgsInMemory setObject:cummArray forKey:[contactObj valueForKey:@"contactLocalID"]];
     }
     
-    NSLog(@"All messages are now: %@", self->_allMsgsInMemory);
+//    NSLog(@"All messages are now: %@", self->_allMsgsInMemory);
 }
 
 
 - (NSInteger) numMsgsInMemoryForContactID:(NSString *)cID{
     return [[self->_allMsgsInMemory objectForKey:cID] count];
+}
+
+// Used to see how many contacts we have stored in memory
+- (NSInteger) numContactsInMemory{
+    return [self->_managedObjectContacts count];
 }
 
 
@@ -138,7 +154,7 @@ NSString *const msgStateReceivedByContact = @"msgStateReceivedByContact";
         NSLog(@"%@, %@", msgError, msgError.localizedDescription);
         return MessageDatabaseInsertError;
     } else {
-        NSLog(@"Succesfully saved message in context: %@", newMessage.managedObjectContext);
+//        NSLog(@"Succesfully saved message in context: %@", newMessage.managedObjectContext);
     }
     NSError *contactError = nil;
     if (![contact.managedObjectContext save:&contactError]) {
@@ -146,7 +162,7 @@ NSString *const msgStateReceivedByContact = @"msgStateReceivedByContact";
         NSLog(@"%@, %@", contactError, contactError.localizedDescription);
         return MessageDatabaseInsertError;
     } else {
-        NSLog(@"Succesfully saved new set of messages in context: %@", contact.managedObjectContext);
+//        NSLog(@"Succesfully saved new set of messages in context: %@", contact.managedObjectContext);
     }
     
     // also insert it into the in-memory object
@@ -154,14 +170,11 @@ NSString *const msgStateReceivedByContact = @"msgStateReceivedByContact";
     return [[newMessage valueForKey:@"msgLocalID"] stringValue];
 }
 
-
+// You should check to make sure that this guy is only called when the database has no contacts... otherwise undefined behavior can occur.
 - (void) populateTestMDB{
     // 1a - The contacts we'll populate the db with first
     NSString *contactName = @"John";
     NSString *contactLocalID = @"1a1a1a";
-    
-    // 1b - Check to make sure that the DB hasn't already been initialized
-    // TODO - implement this
     
     // 1c - Push the contact into the persistent store
     NSEntityDescription *entityContactDescription = [NSEntityDescription entityForName:@"Contact" inManagedObjectContext:self->managedObjectContext];

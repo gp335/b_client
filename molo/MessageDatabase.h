@@ -26,8 +26,14 @@ extern NSString *const msgStateReceivedByContact;
 // Used to pull in messages in sequential order for view controllers
 - (NSString *) msgAtIndex:(NSInteger)index objectForKey:(NSString *)key forContactID:(NSString *)cID;
 
+// Used to pull in the list of friends for view controllers
+- (NSString *) contactAtIndex:(NSInteger)index objectForKey:(NSString *)key;
+
 // Used to see how many messages we have stored in memory
 - (NSInteger) numMsgsInMemoryForContactID: (NSString *)cID;
+
+// Used to see how many contacts we have stored in memory
+- (NSInteger) numContactsInMemory;
 
 // Used to push a new message into the database from the sender
 - (NSString *) newMsg:(NSString *)msgString toContactID:(NSString *) cID;
