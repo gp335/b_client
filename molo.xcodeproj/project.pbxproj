@@ -20,6 +20,7 @@
 		90ED4DA31BFBA303001EAF76 /* cppTestWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 90ED4DA21BFBA303001EAF76 /* cppTestWrapper.mm */; };
 		90F3EA191C21B95900381E9B /* MessageDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 90F3EA181C21B95900381E9B /* MessageDatabase.m */; };
 		90F3EA1C1C21CDF900381E9B /* GatewayClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 90F3EA1B1C21CDF900381E9B /* GatewayClass.m */; };
+		90F3EA1F1C231C7A00381E9B /* ExtendedNSTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 90F3EA1E1C231C7A00381E9B /* ExtendedNSTableView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,6 +59,8 @@
 		90F3EA181C21B95900381E9B /* MessageDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageDatabase.m; sourceTree = "<group>"; };
 		90F3EA1A1C21CDF900381E9B /* GatewayClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GatewayClass.h; sourceTree = "<group>"; };
 		90F3EA1B1C21CDF900381E9B /* GatewayClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GatewayClass.m; sourceTree = "<group>"; };
+		90F3EA1D1C231C7A00381E9B /* ExtendedNSTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExtendedNSTableView.h; sourceTree = "<group>"; };
+		90F3EA1E1C231C7A00381E9B /* ExtendedNSTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExtendedNSTableView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,6 +112,8 @@
 				90F3EA1B1C21CDF900381E9B /* GatewayClass.m */,
 				903D42E41BFBBFD20089F64E /* FriendListViewController.h */,
 				903D42E51BFBBFD20089F64E /* FriendListViewController.m */,
+				90F3EA1D1C231C7A00381E9B /* ExtendedNSTableView.h */,
+				90F3EA1E1C231C7A00381E9B /* ExtendedNSTableView.m */,
 				90780CD01C1D1EDD0041BFCC /* userPreferenceNSViewController.h */,
 				90780CD11C1D1EDD0041BFCC /* userPreferenceNSViewController.m */,
 				90ED4D9F1BFBA2CF001EAF76 /* cppTest.hpp */,
@@ -249,6 +254,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				903D42E61BFBBFD20089F64E /* FriendListViewController.m in Sources */,
+				90F3EA1F1C231C7A00381E9B /* ExtendedNSTableView.m in Sources */,
 				90F3EA191C21B95900381E9B /* MessageDatabase.m in Sources */,
 				90ED4DA31BFBA303001EAF76 /* cppTestWrapper.mm in Sources */,
 				90780CD21C1D1EDD0041BFCC /* userPreferenceNSViewController.m in Sources */,

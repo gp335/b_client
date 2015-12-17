@@ -33,8 +33,6 @@
     [[[self view] window] setInitialFirstResponder:(NSView *)[self usrMsg]];
 }
 
-
-
 // usr string goes on right, friend string on the left...
 - (void) createTableView{
     NSScrollView *scrollView = [[NSScrollView alloc] initWithFrame:placeholderView.bounds];

@@ -24,12 +24,18 @@
      [NSDictionary dictionaryWithObjectsAndKeys:@"Friend #3",@"key1", nil],
      nil];
     [self createTableView];
+    self._myTableView.extendedDelegate = self;
+}
+
+
+- (void)tableView:(NSTableView *)tableView didClickedRow:(NSInteger)row {
+    NSLog(@"Got a click at row: %li", row);
 }
 
 - (void) createTableView{
     NSScrollView *scrollView = [[NSScrollView alloc] initWithFrame:friendListPlaceholderView.bounds];
     [scrollView setBorderType:NSBezelBorder];
-    self._myTableView = [[NSTableView alloc] initWithFrame:friendListPlaceholderView.bounds];
+    self._myTableView = [[ExtendedNSTableView alloc] initWithFrame:friendListPlaceholderView.bounds];
     NSTableColumn *tCol;
     int noOfColumns = 1;
     for (int i=0; i<noOfColumns; i++)

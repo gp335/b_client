@@ -8,13 +8,14 @@
 
 #import <Cocoa/Cocoa.h>
 #import "MessageDatabase.h"
+#import "ExtendedNSTableView.h"
 
-@interface FriendListViewController : NSViewController <NSTableViewDelegate, NSTableViewDataSource>{
+@interface FriendListViewController : NSViewController <ExtendedNSTableViewDelegate, NSTableViewDelegate, NSTableViewDataSource>{
 
     IBOutlet NSView *friendListPlaceholderView;
 }
 
 @property NSMutableArray *_tableContents;
-@property NSTableView *_myTableView;
+@property ExtendedNSTableView *_myTableView;
 
 @end
