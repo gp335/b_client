@@ -23,6 +23,10 @@
 @property (weak, nonatomic) ViewController *messagesViewController;
 @property (weak, nonatomic) FriendListViewController *friendListViewController;
 
+// had to implement this as a method rather than a property since I had
+// to be able to catch this in case it wasn't already set
+-(NSManagedObject *) retrieveUserObj;
+
 -(void)closePreferencesWindow;
 
 @end

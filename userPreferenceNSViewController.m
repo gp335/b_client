@@ -13,37 +13,83 @@
 
 @end
 
-@implementation userPreferenceNSViewController
+@implementation userPreferenceNSViewController{
+    NSManagedObjectContext *managedObjectContext;
+    NSManagedObject *userObj;
+}
 
+// TODO: put this stuff somewhere else... it should have to require us loading the preferences window
 - (void)viewDidLoad {
     [super viewDidLoad];
     // pull the object context
-    self.userName = @"Floo";
     
+    self->managedObjectContext = [[[NSApplication sharedApplication] delegate] managedObjectContext];
+    NSFetchRequest *fetchUserRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"User" inManagedObjectContext:self->managedObjectContext];
+    [fetchUserRequest setEntity:entity];
+    NSError *userError = nil;
+    NSArray *userResult = [self->managedObjectContext executeFetchRequest:fetchUserRequest error:&userError];
+    if (userError) {
+        NSLog(@"Unable to execute user fetch request.");
+        NSLog(@"%@, %@", userError, userError.localizedDescription);
+    }
+    
+    // We don't have any user records yet
+    if(0 == [userResult count]){
+        NSManagedObject *newUser = [[NSManagedObject alloc] initWithEntity:entity insertIntoManagedObjectContext:self->managedObjectContext];
+        [newUser setValue:@"3a3a3a" forKey:@"userLocalID"];
+        // don't need to set a name value since that's set in storyboard
+        NSError *userError = nil;
+        if (![newUser.managedObjectContext save:&userError]) {
+            NSLog(@"Unable to save default user in managed object context.");
+            NSLog(@"%@, %@", userError, userError.localizedDescription);
+        } else {
+            NSLog(@"Succesfully saved default user in context: %@", newUser.managedObjectContext);
+        }
+        self->userObj = newUser;
+
+    // if we got back more than one user, something strange happened and we should flag it
+    } else if(1 != [userResult count]){
+        NSLog(@"Error: Got an inconsistent number of users (expected just 1, got %lu).", [userResult count]);
+        assert(NO);
+    
+    // there was already the correct number of users in the system (1!)
+    } else {
+        self->userObj = userResult[0];
+    }
+    
+    self.userNameField.placeholderString = [self->userObj valueForKey:@"userName"];
+    self.userNameField.stringValue = [self->userObj valueForKey:@"userName"];
 }
 
 - (IBAction)userNameFieldUpdated:(id)sender {
     // grab the user name field
-    
-    NSLog(@"blarg: %@", self.userNameField.stringValue);
-    
+    NSLog(@"Going to update new name to: %@", self.userNameField.stringValue);
+    [self saveNewUserName:self.userNameField.stringValue];
 }
 
 - (IBAction)okButtonPressed:(id)sender {
-    // save the name to the managed context
-    NSLog(@"Saving the user name: %@", self.userName);
+    NSLog(@"Saving the user name on OK press: %@", self.userNameField.stringValue);
+    [self saveNewUserName:self.userNameField.stringValue];
+    
+    AppDelegate *appD = [[NSApplication sharedApplication] delegate];
+    [appD closePreferencesWindow];
 }
 
 - (IBAction)cancelButtonPressed:(id)sender {
-    // just exit
-    NSLog(@"The presenting view controller: %@", [self presentingViewController]);
-    NSLog(@"THe parent view controller: %@", [self parentViewController]);
-    NSLog(@"THe parent NSMenuItem: %@", [self parentNSMenuItem]);
-    NSLog(@"The parent of the parent is: %@", [[self parentViewController] parentViewController]);
-    NSLog(@"The presenting of the parent is: %@", [[self parentViewController] presentingViewController]);
     AppDelegate *appD = [[NSApplication sharedApplication] delegate];
     [appD closePreferencesWindow];
-//    [self dismissController:self];
+}
+
+-(void)saveNewUserName:(NSString *) newName{
+    [self->userObj setValue:newName forKey:@"userName"];
+    NSError *saveError = nil;
+    if (![userObj.managedObjectContext save:&saveError]) {
+        NSLog(@"Unable to save managed object context.");
+        NSLog(@"%@, %@", saveError, saveError.localizedDescription);
+    } else {
+        NSLog(@"Succesfully saved user in context: %@", userObj.managedObjectContext);
+    }
 }
 
 @end

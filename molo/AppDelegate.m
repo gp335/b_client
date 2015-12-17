@@ -14,12 +14,56 @@
 
 @end
 
-@implementation AppDelegate
+@implementation AppDelegate{
+    NSManagedObject *userObj;
+}
+
+-(NSManagedObject *) retrieveUserObj{
+    
+    // if we've already set it then just return
+    if(nil != self->userObj){
+        return self->userObj;
+    }
+    
+    // grab the user object and hold onto it for other functions/ viewcontrollers
+    NSFetchRequest *fetchUserRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"User" inManagedObjectContext:self.managedObjectContext];
+    [fetchUserRequest setEntity:entity];
+    NSError *userError = nil;
+    NSArray *userResult = [self.managedObjectContext executeFetchRequest:fetchUserRequest error:&userError];
+    if (userError) {
+        NSLog(@"Unable to execute user fetch request.");
+        NSLog(@"%@, %@", userError, userError.localizedDescription);
+    }
+    
+    if(0 == [userResult count]){
+        NSManagedObject *newUser = [[NSManagedObject alloc] initWithEntity:entity insertIntoManagedObjectContext:self.managedObjectContext];
+        [newUser setValue:@"3a3a3a" forKey:@"userLocalID"];
+        // don't need to set a name value since that's set in storyboard
+        NSError *userError = nil;
+        if (![newUser.managedObjectContext save:&userError]) {
+            NSLog(@"Unable to save default user in managed object context.");
+            NSLog(@"%@, %@", userError, userError.localizedDescription);
+        } else {
+            NSLog(@"Succesfully saved default user in context: %@", newUser.managedObjectContext);
+        }
+        self->userObj = newUser;
+        
+        // if we got back more than one user, something strange happened and we should flag it
+    } else if(1 != [userResult count]){
+        NSLog(@"Error: Got an inconsistent number of users (expected just 1, got %lu).", [userResult count]);
+        assert(NO);
+        
+        // there was already the correct number of users in the system (1!)
+    } else {
+        self->userObj = userResult[0];
+    }
+    NSLog(@"Finished preparing the user object");
+    return self->userObj;
+}
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     // Insert code here to initialize your application
-    
-    
 }
 
 - (void)applicationWillTerminate:(NSNotification *)aNotification {
@@ -27,15 +71,16 @@
 }
 
 -(void)closePreferencesWindow{
-    NSLog(@"About to close the preferences window!");
-    NSLog(@"Here are the windows we have: %@",[[NSApplication sharedApplication] windows]);
+//    NSLog(@"About to close the preferences window!");
+//    NSLog(@"Here are the windows we have: %@",[[NSApplication sharedApplication] windows]);
     NSWindow *prefWindow = nil;
     for(NSWindow *window in [[NSApplication sharedApplication] windows]){
-        NSLog(@"Window: %@ with title: %@", window, [window title]);
+//        NSLog(@"Window: %@ with title: %@", window, [window title]);
         if([[window title] isEqualToString:@"Preferences"]){
             prefWindow = window;
         }
     }
+    assert(nil != prefWindow);
     [prefWindow close];
 }
 

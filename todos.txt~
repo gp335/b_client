@@ -13,6 +13,9 @@ NETWORKING:
 *) Create a pound-define file for port numbers to use
 *) remember to run checks on startup to make sure that the desired port is free
 
+SECURITY:
+*) Add Axolotl ratchet
+
 
 DONE) Finish linking messages to persistent store
 DONE) Create a list of friends view

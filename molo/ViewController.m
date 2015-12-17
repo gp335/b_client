@@ -16,6 +16,7 @@
 
 @implementation ViewController{
     FriendListViewController *friendListViewController;
+    NSManagedObject *userObj;
 }
 
 
@@ -25,7 +26,9 @@
     AppDelegate *appD = [[NSApplication sharedApplication] delegate];
     appD.messagesViewController = self;
     friendListViewController = appD.friendListViewController;
-    assert(friendListViewController != nil);
+    assert(nil != friendListViewController);
+    self->userObj = [appD retrieveUserObj];
+    assert(nil != self->userObj);
     
     // just some C++ tests...
     NSLog(@"clearly doing something");
@@ -51,7 +54,7 @@
     [userCol setWidth:200.0];
     [[friendCol headerCell] setStringValue:[self->friendListViewController.currentContactInFocus valueForKey:@"contactName"]];
     // TODO: pull in the user's name here once we have preferences fully functioning
-    [[userCol headerCell] setStringValue:[NSString stringWithFormat:@"Me!"]];
+    [[userCol headerCell] setStringValue:[self->userObj valueForKey:@"userName"]];
     [self._myTableView addTableColumn:friendCol];
     [self._myTableView addTableColumn:userCol];
 
