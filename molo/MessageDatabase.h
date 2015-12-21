@@ -19,6 +19,8 @@ extern NSString *const msgStateToServer;
 extern NSString *const msgStateQueuedAtServer;
 extern NSString *const msgStateReceivedByContact;
 
+extern NSString *const MessageDatabaseChangeNotification;
+
 @interface MessageDatabase : NSObject
 
 // used to implement the singleton design pattern

@@ -6,6 +6,8 @@
 //  Copyright © 2015 GLP. All rights reserved.
 //
 
+// here is where I should pull messages regarding DB updates.  and then this is where the notifications happen.
+
 #import "MessageDatabase.h"
 #include <stdlib.h>
 @import AppKit;
@@ -21,6 +23,7 @@ NSString *const msgStateToServer = @"msgStateToServer";
 NSString *const msgStateQueuedAtServer = @"msgStateQueuedAtServer";
 NSString *const msgStateReceivedByContact = @"msgStateReceivedByContact";
 
+NSString *const MessageDatabaseChangeNotification = @"MessageDatabaseChangeNotification";
 
 @implementation MessageDatabase {
     NSManagedObjectContext *managedObjectContext;
@@ -73,6 +76,9 @@ NSString *const msgStateReceivedByContact = @"msgStateReceivedByContact";
         self->_allMsgsInMemory = [[NSMutableDictionary alloc] init];
 
         [self loadMessages];
+        
+        // Listen for any new messages that are inserted into the DB
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(newMsgInDB:) name:NSManagedObjectContextDidSaveNotification object:self->managedObjectContext];
     }
     NSLog(@"Finished initializing the message database");
     return self;
@@ -172,7 +178,8 @@ NSString *const msgStateReceivedByContact = @"msgStateReceivedByContact";
     }
     
     // also insert it into the in-memory object
-    [[self->_allMsgsInMemory objectForKey:cID] insertObject:[NSDictionary dictionaryWithObjectsAndKeys:@"",@"key1",msgString,@"key2", nil] atIndex:0];
+    // IMMEDIATE TODO: THE BELOW SHOULD BE REDUNDANT
+//    [[self->_allMsgsInMemory objectForKey:cID] insertObject:[NSDictionary dictionaryWithObjectsAndKeys:@"",@"key1",msgString,@"key2", nil] atIndex:0];
     return [newMessage valueForKey:@"msgLocalID"];
 }
 
@@ -263,5 +270,35 @@ NSString *const msgStateReceivedByContact = @"msgStateReceivedByContact";
 - (NSString *)genMsgID{
     return [NSString stringWithFormat:@"%X%X%X%X", arc4random_uniform(INT_MAX), arc4random_uniform(INT_MAX), arc4random_uniform(INT_MAX), arc4random_uniform(INT_MAX)];
 }
+
+- (void) newMsgInDB:(NSNotification *) notification{
+    NSLog(@"Got notification in DB: %@", notification);
+    NSEntityDescription *messageEntity = [NSEntityDescription entityForName:@"Message" inManagedObjectContext:notification.object];
+    @try {
+        NSSet *insertedManagedObjects = [[notification valueForKey:@"userInfo"] valueForKey:NSInsertedObjectsKey];
+        // For now we don't really have any use here for updated objects... but that may change in the future
+        // We will want these once we start working with updating message status
+//        NSSet *updatedManagedObjects = [[notification valueForKey:@"userInfo"] valueForKey:NSUpdatedObjectsKey];
+        for(NSManagedObject *obj in insertedManagedObjects){
+            if([[obj entity] isEqual:messageEntity]){
+                NSLog(@"We have at least one new message: %@", [obj valueForKey:@"msgContent"]);
+                // TODO: this is really overkill...there are better ways to get new messages into memory
+                // but I'll deal with that once it becomes an issue
+                [self loadMessages];
+                [[NSNotificationCenter defaultCenter] postNotificationName:MessageDatabaseChangeNotification object:nil];
+                break; // once we've found one new message, [self loadMessages] will have caught all of them
+            }
+        }
+    }
+    @catch(NSException *exception) {
+        NSLog(@"Threw this exception in the handling of a notification from store to DB: %@", exception);
+    }
+    // TODO: also notify the friendlistviewcontroller of a new message so that it can somehow alert the user
+    //    NSEntityDescription *contactEntity = [NSEntityDescription entityForName:@"Contact" inManagedObjectContext:notification.object];
+    
+
+    
+}
+
 
 @end

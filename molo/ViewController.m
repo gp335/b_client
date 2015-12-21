@@ -39,7 +39,9 @@
     
     [self createTableView];
     [[[self view] window] setInitialFirstResponder:(NSView *)[self usrMsg]];
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(storeDidChange:) name:NSManagedObjectContextDidSaveNotification object:[appD managedObjectContext]];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(messageDBDidChange:)name:MessageDatabaseChangeNotification object:nil];
 }
 
 // usr string goes on right, friend string on the left...
@@ -91,7 +93,7 @@
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView
 {
     NSString *contactIDInFocus = [self->friendListViewController.currentContactInFocus valueForKey:@"contactLocalID"];
-    NSLog(@"Checking for length, which seems to be: %li", [[MessageDatabase sharedInstance] numMsgsInMemoryForContactID:contactIDInFocus]);
+//    NSLog(@"Checking for length, which seems to be: %li", [[MessageDatabase sharedInstance] numMsgsInMemoryForContactID:contactIDInFocus]);
     return [[MessageDatabase sharedInstance] numMsgsInMemoryForContactID:contactIDInFocus];
 }
 
@@ -152,12 +154,26 @@
 }
 
 - (void) storeDidChange:(NSNotification *) notification{
-    NSLog(@"Got a change! w notification: [[[%@]]]", notification);
-    NSLog(@"Userinfo: %@", [notification valueForKey:@"userInfo"]);
-    NSManagedObject *updatedVals = [[notification valueForKey:@"userInfo"] valueForKey:NSUpdatedObjectsKey];
-    NSLog(@"Updated vals: %@", updatedVals);
-    NSLog(@"Updated userName: %@", [updatedVals valueForKey:@"userName"]);
-    [[[self._myTableView tableColumnWithIdentifier:@"key2"] headerCell] setStringValue:[self->userObj valueForKey:@"userName"]];
+    // We only grab changes here that have to do with user info (e.g., the name for the column heading)
+    NSEntityDescription *userEntity = [NSEntityDescription entityForName:@"User" inManagedObjectContext:notification.object];
+    @try {
+        NSSet *updatedManagedObjects = [[notification valueForKey:@"userInfo"] valueForKey:NSUpdatedObjectsKey];
+        for(NSManagedObject *obj in updatedManagedObjects){
+            if([[obj entity] isEqual:userEntity]){
+                NSLog(@"I have to update the username to: %@", [obj valueForKey:@"userName"]);
+                [[[self._myTableView tableColumnWithIdentifier:@"key2"] headerCell] setStringValue:[self->userObj valueForKey:@"userName"]];
+                [self._myTableView reloadData];
+            }
+        }
+    }
+    @catch(NSException *exception) {
+        NSLog(@"Not a username update so threw this exception: %@", exception);
+    }
+}
+
+- (void) messageDBDidChange:(NSNotification *)notification{
+    NSLog(@"Got a notification from MessageDatabase that we have new messages: %@", notification);
+    [self._myTableView reloadData];
 }
 
 @end

@@ -60,17 +60,28 @@
     
     self.userNameField.placeholderString = [self->userObj valueForKey:@"userName"];
     self.userNameField.stringValue = [self->userObj valueForKey:@"userName"];
+    self.userName = [self->userObj valueForKey:@"userName"];
 }
 
 - (IBAction)userNameFieldUpdated:(id)sender {
     // grab the user name field
+    NSString *originalName = self.userName;
     NSLog(@"Going to update new name to: %@", self.userNameField.stringValue);
-    [self saveNewUserName:self.userNameField.stringValue];
+    if([self saveNewUserName:self.userNameField.stringValue]){
+        self.userName = self.userNameField.stringValue;
+    } else {
+        self.userNameField.stringValue = originalName;
+    }
 }
 
 - (IBAction)okButtonPressed:(id)sender {
+    NSString *originalName = self.userName;
     NSLog(@"Saving the user name on OK press: %@", self.userNameField.stringValue);
-    [self saveNewUserName:self.userNameField.stringValue];
+    if([self saveNewUserName:self.userNameField.stringValue]){
+        self.userName = self.userNameField.stringValue;
+    } else {
+        self.userNameField.stringValue = originalName;
+    }
     
     AppDelegate *appD = [[NSApplication sharedApplication] delegate];
     [appD closePreferencesWindow];
@@ -81,15 +92,29 @@
     [appD closePreferencesWindow];
 }
 
--(void)saveNewUserName:(NSString *) newName{
-    [self->userObj setValue:newName forKey:@"userName"];
-    NSError *saveError = nil;
-    if (![userObj.managedObjectContext save:&saveError]) {
-        NSLog(@"Unable to save managed object context.");
-        NSLog(@"%@, %@", saveError, saveError.localizedDescription);
+-(BOOL)saveNewUserName:(NSString *) newName{
+    if([self validateStringInput:newName]){
+        [self->userObj setValue:newName forKey:@"userName"];
+        NSError *saveError = nil;
+        if (![userObj.managedObjectContext save:&saveError]) {
+            NSLog(@"Unable to save managed object context.");
+            NSLog(@"%@, %@", saveError, saveError.localizedDescription);
+            return NO;
+        } else {
+            NSLog(@"Succesfully saved user in context: %@", userObj.managedObjectContext);
+            return YES;
+        }
     } else {
-        NSLog(@"Succesfully saved user in context: %@", userObj.managedObjectContext);
+        return NO;
     }
+}
+
+- (BOOL) validateStringInput:(NSString *)str{
+    // check to see if it's only whitespace characters
+    if([[str stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] isEqualToString:@""]){
+        return NO;
+    }
+    return YES;
 }
 
 @end
