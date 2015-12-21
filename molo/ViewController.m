@@ -39,6 +39,7 @@
     
     [self createTableView];
     [[[self view] window] setInitialFirstResponder:(NSView *)[self usrMsg]];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(storeDidChange:) name:NSManagedObjectContextDidSaveNotification object:[appD managedObjectContext]];
 }
 
 // usr string goes on right, friend string on the left...
@@ -148,6 +149,15 @@
         return NO;
     }
     return YES;
+}
+
+- (void) storeDidChange:(NSNotification *) notification{
+    NSLog(@"Got a change! w notification: [[[%@]]]", notification);
+    NSLog(@"Userinfo: %@", [notification valueForKey:@"userInfo"]);
+    NSManagedObject *updatedVals = [[notification valueForKey:@"userInfo"] valueForKey:NSUpdatedObjectsKey];
+    NSLog(@"Updated vals: %@", updatedVals);
+    NSLog(@"Updated userName: %@", [updatedVals valueForKey:@"userName"]);
+    [[[self._myTableView tableColumnWithIdentifier:@"key2"] headerCell] setStringValue:[self->userObj valueForKey:@"userName"]];
 }
 
 @end
