@@ -22,12 +22,18 @@ NSString *const msgStateQueuedAtGateway = @"msgStateQueuedAtGateway";
 NSString *const msgStateToServer = @"msgStateToServer";
 NSString *const msgStateQueuedAtServer = @"msgStateQueuedAtServer";
 NSString *const msgStateReceivedByContact = @"msgStateReceivedByContact";
+NSString *const msgStateReadByContact = @"msgStateReadByContact";
 
 NSString *const MessageDatabaseChangeNotification = @"MessageDatabaseChangeNotification";
+NSString *const MessageDatabaseContactAlertNotification = @"MessageDatabaseContactAlertNotification";
 
 @implementation MessageDatabase {
     NSManagedObjectContext *managedObjectContext;
+    // _allMsgsInMemory maps from contactLocalID -> an array of messages in that conversation
     NSMutableDictionary *_allMsgsInMemory;
+    // same as above, but just holds the message ID of the most recent INBOUND message
+    NSMutableDictionary *_allMostRecentMsgsInMemory;
+    // dictionary that maps from contactLocalID to the managed object contacts
     NSMutableDictionary *_managedObjectContacts;
 }
 
@@ -74,6 +80,7 @@ NSString *const MessageDatabaseChangeNotification = @"MessageDatabaseChangeNotif
         }
 
         self->_allMsgsInMemory = [[NSMutableDictionary alloc] init];
+        self->_allMostRecentMsgsInMemory = [[NSMutableDictionary alloc] init];
 
         [self loadMessages];
         
@@ -95,16 +102,33 @@ NSString *const MessageDatabaseChangeNotification = @"MessageDatabaseChangeNotif
 
 // Function assumes it's given an index that is within the number of contacts
 - (NSManagedObject *) contactObjectAtIndex:(NSInteger)index{
-    NSArray *contactArray = [self->_managedObjectContacts allValues];
-    NSArray *sortDescriptors = [[NSArray alloc] initWithObjects: [[NSSortDescriptor alloc] initWithKey:@"contactName" ascending:YES], nil];
-    NSArray *sortedContactArray = [contactArray sortedArrayUsingDescriptors:sortDescriptors];
-    assert(index < [sortedContactArray count]);
-//    NSLog(@"Returning object with name: %@", [sortedContactArray[index] valueForKey:@"contactLocalID"]);
+    NSArray *sortedContactArray = [self sortedContactObjects];
+    assert(index < [sortedContactArray count] && index >= 0);
     return sortedContactArray[index];
 }
 
 - (NSString *) contactNameAtIndex:(NSInteger)index{
     return [[self contactObjectAtIndex:index] valueForKey:@"contactName"];
+}
+
+- (NSNumber *) indexForContactID:(NSString *)cID{
+    NSArray *sortedContactArray = [self sortedContactObjects];
+    NSInteger index = 0;
+    for(NSManagedObject *curContactObj in sortedContactArray){
+        if([cID isEqualToString:[curContactObj valueForKey:@"contactLocalID"]]){
+            return [[NSNumber alloc] initWithInteger:index];
+        }
+        index++;
+    }
+    return [[NSNumber alloc] initWithInteger:-1];
+}
+
+// This is the method to always use to return a sorted list of contact objects
+-(NSArray *)sortedContactObjects{
+    NSArray *contactArray = [self->_managedObjectContacts allValues];
+    NSArray *sortDescriptors = [[NSArray alloc] initWithObjects: [[NSSortDescriptor alloc] initWithKey:@"contactName" ascending:YES], nil];
+    NSArray *sortedContactArray = [contactArray sortedArrayUsingDescriptors:sortDescriptors];
+    return sortedContactArray;
 }
 
 
@@ -118,17 +142,18 @@ NSString *const MessageDatabaseChangeNotification = @"MessageDatabaseChangeNotif
         NSArray *sortedMsgArray = [msgSet sortedArrayUsingDescriptors:sortDescriptors];
         
         NSMutableArray *cummArray = [[NSMutableArray alloc] init];
+        NSManagedObject *mostRecentObj;
         for(NSManagedObject *msgObj in sortedMsgArray){
-            if([[msgObj valueForKey:@"isInbound"] isEqual: @NO]){
-                [cummArray insertObject:[NSDictionary dictionaryWithObjectsAndKeys:@"",@"key1",[msgObj valueForKey:@"msgContent"],@"key2",nil] atIndex:0];
-            } else {
+            if([[msgObj valueForKey:@"isInbound"] isEqual: @YES]){
                 [cummArray insertObject:[NSDictionary dictionaryWithObjectsAndKeys:[msgObj valueForKey:@"msgContent"],@"key1",@"",@"key2",nil] atIndex:0];
+                mostRecentObj = msgObj;
+            } else {
+                [cummArray insertObject:[NSDictionary dictionaryWithObjectsAndKeys:@"",@"key1",[msgObj valueForKey:@"msgContent"],@"key2",nil] atIndex:0];
             }
         }
         [self->_allMsgsInMemory setObject:cummArray forKey:[contactObj valueForKey:@"contactLocalID"]];
-
+        [self->_allMostRecentMsgsInMemory setObject:[mostRecentObj valueForKey:@"msgLocalID"] forKey:[contactObj valueForKey:@"contactLocalID"]];
     }
-    
 }
 
 
@@ -177,11 +202,9 @@ NSString *const MessageDatabaseChangeNotification = @"MessageDatabaseChangeNotif
 //        NSLog(@"Succesfully saved new set of messages in context: %@", contact.managedObjectContext);
     }
     
-    // also insert it into the in-memory object
-    // IMMEDIATE TODO: THE BELOW SHOULD BE REDUNDANT
-//    [[self->_allMsgsInMemory objectForKey:cID] insertObject:[NSDictionary dictionaryWithObjectsAndKeys:@"",@"key1",msgString,@"key2", nil] atIndex:0];
     return [newMessage valueForKey:@"msgLocalID"];
 }
+
 
 // You should check to make sure that this guy is only called when the database has no contacts... otherwise undefined behavior can occur.
 - (void) populateTestMDB{
@@ -273,7 +296,9 @@ NSString *const MessageDatabaseChangeNotification = @"MessageDatabaseChangeNotif
 
 - (void) newMsgInDB:(NSNotification *) notification{
     NSLog(@"Got notification in DB: %@", notification);
+    NSMutableDictionary *old_allMostRecentMsgsInMemory = [self->_allMostRecentMsgsInMemory mutableCopy];
     NSEntityDescription *messageEntity = [NSEntityDescription entityForName:@"Message" inManagedObjectContext:notification.object];
+    BOOL aContactHasANewMessage = NO;
     @try {
         NSSet *insertedManagedObjects = [[notification valueForKey:@"userInfo"] valueForKey:NSInsertedObjectsKey];
         // For now we don't really have any use here for updated objects... but that may change in the future
@@ -286,18 +311,33 @@ NSString *const MessageDatabaseChangeNotification = @"MessageDatabaseChangeNotif
                 // but I'll deal with that once it becomes an issue
                 [self loadMessages];
                 [[NSNotificationCenter defaultCenter] postNotificationName:MessageDatabaseChangeNotification object:nil];
+                aContactHasANewMessage = YES;
                 break; // once we've found one new message, [self loadMessages] will have caught all of them
             }
         }
     }
     @catch(NSException *exception) {
-        NSLog(@"Threw this exception in the handling of a notification from store to DB: %@", exception);
+        NSLog(@"Threw this exception in the handling of a [MESSAGE] notification from store to DB: %@", exception);
     }
-    // TODO: also notify the friendlistviewcontroller of a new message so that it can somehow alert the user
-    //    NSEntityDescription *contactEntity = [NSEntityDescription entityForName:@"Contact" inManagedObjectContext:notification.object];
-    
-
-    
+    // with the copy of the contact database, we move through it and delete items that haven't changed
+    // and then pass on to the friendListViewController just those key/value pairs that have changed
+    // the below assumes that loadMessages has already occurred and therefore that _allMostRecentMsgsInMemory was changed
+    if(aContactHasANewMessage){
+        @try{
+            for(NSString *currContactLocalID in [self->_managedObjectContacts allKeys]){
+                NSLog(@"checking on contactID: %@ which has current: %@ and past: %@", currContactLocalID, [self->_allMostRecentMsgsInMemory valueForKey:currContactLocalID], [old_allMostRecentMsgsInMemory valueForKey:currContactLocalID]);
+                if([[self->_allMostRecentMsgsInMemory valueForKey:currContactLocalID] isEqualToString:[old_allMostRecentMsgsInMemory valueForKey:currContactLocalID]]){
+                    [old_allMostRecentMsgsInMemory removeObjectForKey:currContactLocalID];
+                }
+            }
+            if([old_allMostRecentMsgsInMemory count] > 0){
+                [[NSNotificationCenter defaultCenter] postNotificationName:MessageDatabaseContactAlertNotification object:self userInfo:old_allMostRecentMsgsInMemory];
+            }
+        }
+        @catch (NSException *exception){
+            NSLog(@"Threw this exception in the handling of a [CONTACT] notification from store to DB: %@", exception);
+        }
+    }
 }
 
 

@@ -18,8 +18,13 @@ extern NSString *const msgStateQueuedAtGateway;
 extern NSString *const msgStateToServer;
 extern NSString *const msgStateQueuedAtServer;
 extern NSString *const msgStateReceivedByContact;
+extern NSString *const msgStateReadByContact;
 
+// post this when you want to alert something in the ViewController
 extern NSString *const MessageDatabaseChangeNotification;
+// post this when you want to alert something in the FriendListController
+extern NSString *const MessageDatabaseContactAlertNotification;
+
 
 @interface MessageDatabase : NSObject
 
@@ -34,6 +39,9 @@ extern NSString *const MessageDatabaseChangeNotification;
 
 // Used to pull in the list of friends for view controllers
 - (NSManagedObject *) contactObjectAtIndex:(NSInteger)index;
+
+// Used to pull the index for a certain contactLocalID
+- (NSNumber *) indexForContactID:(NSString *)cID;
 
 // Used to see how many messages we have stored in memory
 - (NSInteger) numMsgsInMemoryForContactID: (NSString *)cID;

@@ -1,5 +1,5 @@
 IMMEDIATE:
-*) Refactor chat view controller to use notification center to update the view (instead of ad-hoc calls to reloadData)
+
 
 INTERFACE:
 *) make the text auto-resize nicely if there's more text than one line
@@ -7,6 +7,7 @@ INTERFACE:
 *) Fix the table view... make the columns resize
 *) Finish the preferences window
 *) At some point, loading all new messages into memory when a new one is inserted into the store will become unwieldy - but we're avoiding that issue until it becomes a problem
+*) Right now the message "state" and the coordination of that state between the friend view and the messages view is a mess.  at some point this deserves 1-2 days of refactor before it's ready for prime time (for example, we lose the fact that a message was unread if we don't read the message before quitting the app... that state isn't stored in the persistent store right now)
 
 FUNCTIONALITY:
 *) Push preferences into the persistent store
@@ -18,7 +19,7 @@ NETWORKING:
 SECURITY:
 *) Add Axolotl ratchet
 
-
+DONE) Refactor chat view controller to use notification center to update the view (instead of ad-hoc calls to reloadData)
 DONE) Finish linking messages to persistent store
 DONE) Create a list of friends view
 DONE) link the contact name to the "friend" view controller

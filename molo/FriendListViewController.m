@@ -8,11 +8,14 @@
 
 #import "FriendListViewController.h"
 #import "AppDelegate.h"
+
 @interface FriendListViewController ()
 
 @end
 
-@implementation FriendListViewController
+@implementation FriendListViewController {
+    NSMutableSet *rowsWithAlerts;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -22,6 +25,8 @@
     // we set this to nil initially since the conversation view controller gets
     // set up only after this one
     self.conversationViewController = nil;
+    
+    self->rowsWithAlerts = [[NSMutableSet alloc] init];
 
     // Do view setup here.
     self._tableContents =
@@ -33,6 +38,7 @@
     [self createTableView];
     self.currentContactInFocus = [[MessageDatabase sharedInstance] contactObjectAtIndex:0];
     self._myTableView.extendedDelegate = self;
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(contactUpdateFromDB:) name:MessageDatabaseContactAlertNotification object:nil];
 }
 
 
@@ -48,6 +54,10 @@
     self.currentContactInFocus = [[MessageDatabase sharedInstance] contactObjectAtIndex:row];
     NSLog(@"Resetting focus to contactID: %@", [self.currentContactInFocus valueForKey:@"contactLocalID"]);
     [self.conversationViewController updateConversationView];
+    if([self->rowsWithAlerts containsObject:[[NSNumber alloc] initWithInteger:row]]){
+        [self->rowsWithAlerts removeObject:[[NSNumber alloc] initWithInteger:row]];
+    }
+    [self->__myTableView reloadData];
 }
 
 - (void) createTableView{
@@ -81,8 +91,12 @@
 // TableView Datasource method implementation
 - (id)tableView:(NSTableView *)aTableView objectValueForTableColumn:(NSTableColumn *)aTableColumn row:(NSInteger)rowIndex
 {
-    NSString *aString = [[MessageDatabase sharedInstance] contactNameAtIndex:rowIndex];
-    return aString;
+    NSString *nameString = [[MessageDatabase sharedInstance] contactNameAtIndex:rowIndex];
+    if([self->rowsWithAlerts containsObject:[[NSNumber alloc] initWithInteger:rowIndex]]){
+        // TODO: at some point, make this a background color (or something) instead of just a text change...
+        return [[NSString alloc] initWithFormat:@"%@ (*)", nameString];
+    }
+    return nameString;
 }
 
 // TableView Datasource method implementation
@@ -96,6 +110,14 @@
     [super setRepresentedObject:representedObject];
     
     // Update the view, if already loaded.
+}
+
+- (void) contactUpdateFromDB:(NSNotification *)notification{
+    NSLog(@"Friend list got a notification!: %@", notification);
+    for(NSString *currContactLocalID in [notification.object allKeys]){
+        [self->rowsWithAlerts addObject:[[MessageDatabase sharedInstance] indexForContactID:currContactLocalID]];
+    }
+    [self->__myTableView reloadData];
 }
 
 @end

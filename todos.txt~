@@ -6,6 +6,7 @@ INTERFACE:
 *) make the textcell be the first responder when the app starts up
 *) Fix the table view... make the columns resize
 *) Finish the preferences window
+*) At some point, loading all new messages into memory when a new one is inserted into the store will become unwieldy - but we're avoiding that issue until it becomes a problem
 
 FUNCTIONALITY:
 *) Push preferences into the persistent store
